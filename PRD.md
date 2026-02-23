@@ -34,11 +34,11 @@ This is a sophisticated financial presentation tool with multiple interactive fe
 - **Success criteria**: Clear visual hierarchy, digestible descriptions, reinforces business strategy
 
 ### Interactive Financial Modeler
-- **Functionality**: Live calculator with sliders for key revenue drivers (training seats, retrofit projects, retail locations) that updates charts in real-time
-- **Purpose**: Allow lender to explore scenarios and validate projections independently
+- **Functionality**: Live calculator with sliders for six revenue drivers (training seats, retrofit projects, retail locations, consulting hours, maintenance contracts, affiliate partnerships) that updates comprehensive financial metrics and charts in real-time
+- **Purpose**: Allow lender to explore scenarios, validate projections independently, and understand full P&L including revenue mix, expenses, margins, and break-even analysis
 - **Trigger**: User interacts with slider controls or scenario buttons (Floor/Base/Stretch)
-- **Progression**: Default loads Base scenario → User adjusts sliders → Revenue, NOI, and DSCR update instantly → Charts re-render → Scenario buttons allow quick comparison
-- **Success criteria**: Smooth real-time updates (<100ms), accurate calculations match business plan, intuitive controls, DSCR always prominently displayed
+- **Progression**: Default loads Base scenario → User adjusts sliders → Revenue, Gross Profit, Gross Margin, NOI, Net Margin, and DSCR update instantly → Multiple charts re-render (5-year projections, revenue mix pie chart, expense breakdown, revenue driver details) → Scenario buttons allow quick comparison
+- **Success criteria**: Smooth real-time updates (<100ms), accurate calculations match business plan, intuitive controls, DSCR always prominently displayed, all six revenue streams visible and adjustable, expense breakdown shows COGS/fixed/variable costs, break-even analysis clearly displayed
 
 ### TCO Comparison Charts
 - **Functionality**: Visual comparison charts showing 77% cost savings vs competitors

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Building, ChartLine, Target, CurrencyDollar, Users, TrendUp, CheckCircle, FileText, Wrench, Storefront, GraduationCap, Heart } from '@phosphor-icons/react'
+import { Building, ChartLine, Target, CurrencyDollar, Users, TrendUp, CheckCircle, FileText, Wrench, Storefront, GraduationCap, Heart, Headset, CirclesThreePlus, Handshake } from '@phosphor-icons/react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
+import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { useKV } from '@github/spark/hooks'
 
 function App() {
@@ -19,34 +19,78 @@ function App() {
   const [trainingSeats, setTrainingSeats] = useKV('training-seats', '50')
   const [retrofitProjects, setRetrofitProjects] = useKV('retrofit-projects', '30')
   const [retailLocations, setRetailLocations] = useKV('retail-locations', '2')
+  const [consultingHours, setConsultingHours] = useKV('consulting-hours', '120')
+  const [maintenanceContracts, setMaintenanceContracts] = useKV('maintenance-contracts', '25')
+  const [affiliateDeals, setAffiliateDeals] = useKV('affiliate-deals', '15')
 
   const scenarios = {
-    floor: { training: 30, retrofit: 20, retail: 1 },
-    base: { training: 50, retrofit: 30, retail: 2 },
-    stretch: { training: 75, retrofit: 45, retail: 3 }
+    floor: { training: 30, retrofit: 20, retail: 1, consulting: 80, maintenance: 15, affiliate: 10 },
+    base: { training: 50, retrofit: 30, retail: 2, consulting: 120, maintenance: 25, affiliate: 15 },
+    stretch: { training: 75, retrofit: 45, retail: 3, consulting: 180, maintenance: 40, affiliate: 25 }
   }
 
-  const calculateFinancials = (training: number, retrofit: number, retail: number) => {
+  const calculateFinancials = (
+    training: number,
+    retrofit: number,
+    retail: number,
+    consulting: number,
+    maintenance: number,
+    affiliate: number
+  ) => {
     const trainingRevenue = training * 3500 * 4
     const retrofitRevenue = retrofit * 12000
     const retailRevenue = retail * 180000
-    const totalRevenue = trainingRevenue + retrofitRevenue + retailRevenue
-    const noi = totalRevenue * 0.35
+    const consultingRevenue = consulting * 150 * 12
+    const maintenanceRevenue = maintenance * 1200 * 12
+    const affiliateRevenue = affiliate * 800 * 12
+    
+    const totalRevenue = trainingRevenue + retrofitRevenue + retailRevenue + consultingRevenue + maintenanceRevenue + affiliateRevenue
+    
+    const cogs = retrofitRevenue * 0.35 + retailRevenue * 0.45 + affiliateRevenue * 0.15
+    const grossProfit = totalRevenue - cogs
+    const grossMargin = totalRevenue > 0 ? (grossProfit / totalRevenue) * 100 : 0
+    
+    const fixedCosts = 180000
+    const variableCosts = totalRevenue * 0.12
+    const totalExpenses = fixedCosts + variableCosts + cogs
+    
+    const noi = totalRevenue - totalExpenses
     const annualDebt = 640000 * 0.095
     const dscr = noi / annualDebt
     
+    const breakEvenRevenue = (fixedCosts + annualDebt) / (1 - ((variableCosts + cogs) / totalRevenue))
+    
     return {
       revenue: totalRevenue,
+      revenueByStream: {
+        training: trainingRevenue,
+        retrofit: retrofitRevenue,
+        retail: retailRevenue,
+        consulting: consultingRevenue,
+        maintenance: maintenanceRevenue,
+        affiliate: affiliateRevenue
+      },
+      cogs,
+      grossProfit,
+      grossMargin,
+      fixedCosts,
+      variableCosts,
+      totalExpenses,
       noi,
       dscr: dscr.toFixed(2),
-      debtService: annualDebt
+      debtService: annualDebt,
+      breakEven: breakEvenRevenue,
+      netMargin: totalRevenue > 0 ? (noi / totalRevenue) * 100 : 0
     }
   }
 
   const currentFinancials = calculateFinancials(
     parseInt(trainingSeats || '50'),
     parseInt(retrofitProjects || '30'),
-    parseInt(retailLocations || '2')
+    parseInt(retailLocations || '2'),
+    parseInt(consultingHours || '120'),
+    parseInt(maintenanceContracts || '25'),
+    parseInt(affiliateDeals || '15')
   )
 
   const projectionData = [
@@ -62,12 +106,30 @@ function App() {
     { category: 'OverIT Solution', cost: 10350 }
   ]
 
+  const revenueStreamData = [
+    { name: 'Training', value: currentFinancials.revenueByStream.training, fill: 'hsl(var(--secondary))' },
+    { name: 'Retrofit', value: currentFinancials.revenueByStream.retrofit, fill: 'hsl(var(--accent))' },
+    { name: 'Retail', value: currentFinancials.revenueByStream.retail, fill: 'hsl(var(--success))' },
+    { name: 'Consulting', value: currentFinancials.revenueByStream.consulting, fill: 'hsl(var(--chart-1))' },
+    { name: 'Maintenance', value: currentFinancials.revenueByStream.maintenance, fill: 'hsl(var(--chart-2))' },
+    { name: 'Affiliate', value: currentFinancials.revenueByStream.affiliate, fill: 'hsl(var(--chart-3))' }
+  ]
+
+  const expenseBreakdownData = [
+    { category: 'COGS', amount: currentFinancials.cogs },
+    { category: 'Fixed Costs', amount: currentFinancials.fixedCosts },
+    { category: 'Variable Costs', amount: currentFinancials.variableCosts }
+  ]
+
   const setScenarioValues = (scenarioName: string) => {
     setScenario(scenarioName)
     const values = scenarios[scenarioName as keyof typeof scenarios]
     setTrainingSeats(values.training.toString())
     setRetrofitProjects(values.retrofit.toString())
     setRetailLocations(values.retail.toString())
+    setConsultingHours(values.consulting.toString())
+    setMaintenanceContracts(values.maintenance.toString())
+    setAffiliateDeals(values.affiliate.toString())
   }
 
   return (
@@ -301,9 +363,9 @@ function App() {
       <section id="financials" className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Interactive Financial Model</h2>
+            <h2 className="text-4xl font-bold mb-4">Comprehensive Financial Model</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Adjust revenue drivers to explore scenarios and validate projections
+              Interactive revenue and expense modeling with six diversified income streams
             </p>
           </div>
 
@@ -361,39 +423,272 @@ function App() {
                   className="py-4"
                 />
               </div>
+
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <label className="text-sm font-medium">Consulting Hours/Month</label>
+                  <Badge variant="secondary" className="font-mono">{consultingHours}</Badge>
+                </div>
+                <Slider
+                  value={[parseInt(consultingHours || '120')]}
+                  onValueChange={(value) => setConsultingHours(value[0].toString())}
+                  min={40}
+                  max={200}
+                  step={10}
+                  className="py-4"
+                />
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <label className="text-sm font-medium">Maintenance Contracts</label>
+                  <Badge variant="secondary" className="font-mono">{maintenanceContracts}</Badge>
+                </div>
+                <Slider
+                  value={[parseInt(maintenanceContracts || '25')]}
+                  onValueChange={(value) => setMaintenanceContracts(value[0].toString())}
+                  min={5}
+                  max={50}
+                  step={5}
+                  className="py-4"
+                />
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <label className="text-sm font-medium">Affiliate Partnerships</label>
+                  <Badge variant="secondary" className="font-mono">{affiliateDeals}</Badge>
+                </div>
+                <Slider
+                  value={[parseInt(affiliateDeals || '15')]}
+                  onValueChange={(value) => setAffiliateDeals(value[0].toString())}
+                  min={5}
+                  max={30}
+                  step={5}
+                  className="py-4"
+                />
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-              <Card className="p-6 bg-muted/50">
-                <p className="text-sm text-muted-foreground mb-2">Annual Revenue</p>
-                <p className="font-mono text-2xl font-bold">${(currentFinancials.revenue / 1000).toFixed(0)}K</p>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+              <Card className="p-4 bg-muted/50">
+                <p className="text-xs text-muted-foreground mb-1">Revenue</p>
+                <p className="font-mono text-xl font-bold">${(currentFinancials.revenue / 1000).toFixed(0)}K</p>
               </Card>
-              <Card className="p-6 bg-muted/50">
-                <p className="text-sm text-muted-foreground mb-2">Net Operating Income</p>
-                <p className="font-mono text-2xl font-bold">${(currentFinancials.noi / 1000).toFixed(0)}K</p>
+              <Card className="p-4 bg-muted/50">
+                <p className="text-xs text-muted-foreground mb-1">Gross Profit</p>
+                <p className="font-mono text-xl font-bold">${(currentFinancials.grossProfit / 1000).toFixed(0)}K</p>
               </Card>
-              <Card className="p-6 bg-muted/50">
-                <p className="text-sm text-muted-foreground mb-2">Annual Debt Service</p>
-                <p className="font-mono text-2xl font-bold">${(currentFinancials.debtService / 1000).toFixed(0)}K</p>
+              <Card className="p-4 bg-muted/50">
+                <p className="text-xs text-muted-foreground mb-1">Gross Margin</p>
+                <p className="font-mono text-xl font-bold">{currentFinancials.grossMargin.toFixed(1)}%</p>
               </Card>
-              <Card className="p-6 bg-success/10 border-success">
-                <p className="text-sm text-muted-foreground mb-2">DSCR</p>
-                <p className="font-mono text-2xl font-bold text-success">{currentFinancials.dscr}×</p>
+              <Card className="p-4 bg-muted/50">
+                <p className="text-xs text-muted-foreground mb-1">NOI</p>
+                <p className="font-mono text-xl font-bold">${(currentFinancials.noi / 1000).toFixed(0)}K</p>
+              </Card>
+              <Card className="p-4 bg-muted/50">
+                <p className="text-xs text-muted-foreground mb-1">Net Margin</p>
+                <p className="font-mono text-xl font-bold">{currentFinancials.netMargin.toFixed(1)}%</p>
+              </Card>
+              <Card className="p-4 bg-success/10 border-success">
+                <p className="text-xs text-muted-foreground mb-1">DSCR</p>
+                <p className="font-mono text-xl font-bold text-success">{currentFinancials.dscr}×</p>
               </Card>
             </div>
 
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={projectionData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="year" />
-                  <YAxis />
-                  <Tooltip formatter={(value) => `$${(value as number).toLocaleString()}`} />
-                  <Legend />
-                  <Line type="monotone" dataKey="revenue" stroke="hsl(var(--secondary))" strokeWidth={2} name="Revenue" />
-                  <Line type="monotone" dataKey="noi" stroke="hsl(var(--success))" strokeWidth={2} name="NOI" />
-                </LineChart>
-              </ResponsiveContainer>
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div>
+                <h3 className="text-xl font-semibold mb-4">5-Year Projections</h3>
+                <div className="h-80">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={projectionData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="year" />
+                      <YAxis />
+                      <Tooltip formatter={(value) => `$${(value as number).toLocaleString()}`} />
+                      <Legend />
+                      <Line type="monotone" dataKey="revenue" stroke="hsl(var(--secondary))" strokeWidth={2} name="Revenue" />
+                      <Line type="monotone" dataKey="noi" stroke="hsl(var(--success))" strokeWidth={2} name="NOI" />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold mb-4">Revenue Mix by Stream</h3>
+                <div className="h-80">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={revenueStreamData}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                        outerRadius={100}
+                        fill="#8884d8"
+                        dataKey="value"
+                      >
+                        {revenueStreamData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.fill} />
+                        ))}
+                      </Pie>
+                      <Tooltip formatter={(value) => `$${(value as number).toLocaleString()}`} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              <Card className="p-6">
+                <h3 className="text-xl font-semibold mb-4">Revenue Drivers Detail</h3>
+                <div className="space-y-3">
+                  {[
+                    { icon: <GraduationCap size={20} weight="duotone" />, label: 'Training', value: currentFinancials.revenueByStream.training },
+                    { icon: <Wrench size={20} weight="duotone" />, label: 'Retrofit', value: currentFinancials.revenueByStream.retrofit },
+                    { icon: <Storefront size={20} weight="duotone" />, label: 'Retail', value: currentFinancials.revenueByStream.retail },
+                    { icon: <Headset size={20} weight="duotone" />, label: 'Consulting', value: currentFinancials.revenueByStream.consulting },
+                    { icon: <CirclesThreePlus size={20} weight="duotone" />, label: 'Maintenance', value: currentFinancials.revenueByStream.maintenance },
+                    { icon: <Handshake size={20} weight="duotone" />, label: 'Affiliate', value: currentFinancials.revenueByStream.affiliate }
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <div className="text-secondary">{item.icon}</div>
+                        <span className="font-medium">{item.label}</span>
+                      </div>
+                      <span className="font-mono font-semibold">${(item.value / 1000).toFixed(0)}K</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              <Card className="p-6">
+                <h3 className="text-xl font-semibold mb-4">Expense Breakdown</h3>
+                <div className="h-64 mb-4">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={expenseBreakdownData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="category" />
+                      <YAxis />
+                      <Tooltip formatter={(value) => `$${(value as number).toLocaleString()}`} />
+                      <Bar dataKey="amount" fill="hsl(var(--destructive))" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Total Expenses:</span>
+                    <span className="font-mono font-semibold">${(currentFinancials.totalExpenses / 1000).toFixed(0)}K</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Annual Debt Service:</span>
+                    <span className="font-mono font-semibold">${(currentFinancials.debtService / 1000).toFixed(0)}K</span>
+                  </div>
+                  <Separator className="my-2" />
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Break-Even Revenue:</span>
+                    <span className="font-mono font-semibold">${(currentFinancials.breakEven / 1000).toFixed(0)}K</span>
+                  </div>
+                  <div className="flex justify-between text-success">
+                    <span className="font-medium">Above Break-Even:</span>
+                    <span className="font-mono font-bold">${((currentFinancials.revenue - currentFinancials.breakEven) / 1000).toFixed(0)}K</span>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </Card>
+
+          <Card className="p-8 mt-8">
+            <div className="grid md:grid-cols-3 gap-8">
+              <div>
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <GraduationCap size={24} className="text-secondary" weight="duotone" />
+                  New Revenue Streams
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold mb-2">Technical Consulting</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Hourly consulting services for network design, implementation strategy, and technical advisory at $150/hr.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2">Maintenance Contracts</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Monthly recurring revenue from ongoing support and maintenance agreements at $1,200/month per contract.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2">Affiliate Partnerships</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Commission-based revenue from strategic vendor partnerships and referral programs at $800/month per active deal.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <TrendUp size={24} className="text-success" weight="duotone" />
+                  Financial Resilience
+                </h3>
+                <div className="space-y-4">
+                  <div className="p-4 bg-success/10 rounded-lg border border-success/20">
+                    <p className="text-sm font-semibold mb-1">Strong DSCR</p>
+                    <p className="text-3xl font-bold font-mono text-success mb-1">{currentFinancials.dscr}×</p>
+                    <p className="text-xs text-muted-foreground">Well above 1.25× minimum requirement</p>
+                  </div>
+                  <div className="p-4 bg-muted/50 rounded-lg">
+                    <p className="text-sm font-semibold mb-1">Gross Margin</p>
+                    <p className="text-2xl font-bold font-mono mb-1">{currentFinancials.grossMargin.toFixed(1)}%</p>
+                    <p className="text-xs text-muted-foreground">Healthy profitability on core services</p>
+                  </div>
+                  <div className="p-4 bg-muted/50 rounded-lg">
+                    <p className="text-sm font-semibold mb-1">Net Margin</p>
+                    <p className="text-2xl font-bold font-mono mb-1">{currentFinancials.netMargin.toFixed(1)}%</p>
+                    <p className="text-xs text-muted-foreground">After all expenses and debt service</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <Target size={24} className="text-accent" weight="duotone" />
+                  Risk Mitigation
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle size={20} className="text-success mt-0.5 flex-shrink-0" weight="fill" />
+                    <div>
+                      <p className="text-sm font-semibold">Diversified Revenue</p>
+                      <p className="text-xs text-muted-foreground">Six independent streams reduce single-point risk</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle size={20} className="text-success mt-0.5 flex-shrink-0" weight="fill" />
+                    <div>
+                      <p className="text-sm font-semibold">Recurring Income</p>
+                      <p className="text-xs text-muted-foreground">Maintenance contracts provide predictable cash flow</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle size={20} className="text-success mt-0.5 flex-shrink-0" weight="fill" />
+                    <div>
+                      <p className="text-sm font-semibold">Scalable Model</p>
+                      <p className="text-xs text-muted-foreground">Low marginal costs enable rapid growth</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle size={20} className="text-success mt-0.5 flex-shrink-0" weight="fill" />
+                    <div>
+                      <p className="text-sm font-semibold">Market Disruption</p>
+                      <p className="text-xs text-muted-foreground">77% cost advantage creates competitive moat</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </Card>
 
