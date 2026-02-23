@@ -81,7 +81,7 @@ This is a sophisticated financial presentation tool with multiple interactive fe
 The design should evoke trust, sophistication, and innovation - feeling like a fintech startup meets enterprise SaaS. It must balance being visually modern (to show the business understands technology) while maintaining financial gravitas (to inspire confidence in loan underwriters). The aesthetic should whisper "we know what we're doing" through attention to detail, smooth interactions, and data-driven storytelling.
 
 ## Color Selection
-A professional tech-finance palette inspired by UniFi's brand with financial credibility:
+A professional tech-finance palette inspired by UniFi's brand with vibrant, energetic colors that convey confidence and innovation:
 
 - **Primary Color**: `oklch(0.25 0.04 255)` - Deep navy blue that communicates trust, stability, and financial expertise
 - **Secondary Colors**: 
@@ -89,22 +89,24 @@ A professional tech-finance palette inspired by UniFi's brand with financial cre
   - Emerald `oklch(0.65 0.15 165)` - Success color for positive metrics (DSCR, profitability, savings)
 - **Accent Color**: `oklch(0.70 0.18 50)` - Warm amber for calls-to-action and important highlights that demand attention
 - **Foreground/Background Pairings**: 
-  - Primary Navy (#0A0F1E): White text (#FFFFFF) - Ratio 16.2:1 ✓
-  - Sky Blue (#3B9ED8): White text (#FFFFFF) - Ratio 5.1:1 ✓
-  - Emerald (#2DB884): White text (#FFFFFF) - Ratio 4.8:1 ✓
-  - Background Light (#F8FAFC): Dark Navy (#0A0F1E) - Ratio 15.8:1 ✓
+  - Primary Navy: White text (#FFFFFF) - Ratio 16.2:1 ✓
+  - Sky Blue: White text (#FFFFFF) - Ratio 5.1:1 ✓
+  - Emerald: White text (#FFFFFF) - Ratio 4.8:1 ✓
+  - Background Light (#F8FAFC): Dark Navy - Ratio 15.8:1 ✓
+- **Gradient Backgrounds**: Sections use subtle gradients blending secondary/5, accent/5, and success/5 for visual variety and depth without overwhelming content
 
 ## Font Selection
-Typography should convey modern professionalism with a hint of editorial sophistication to elevate beyond typical business presentations.
+Typography conveys modern professionalism with a hint of editorial sophistication. Font families are properly applied with appropriate weights and features.
 
 - **Typographic Hierarchy**:
-  - H1 (Main Title): Playfair Display Bold/48px/tight - Editorial gravitas for hero headline
-  - H2 (Section Headers): Inter Bold/32px/normal - Clean modern hierarchy
+  - H1 (Main Title): Playfair Display Bold/48-72px/tight - Editorial gravitas for hero headline
+  - H2 (Section Headers): Inter Bold/32-40px/normal - Clean modern hierarchy
   - H3 (Card Headers): Inter SemiBold/24px/normal - Clear subsection definition
   - Body (Primary): Inter Regular/16px/relaxed (1.6 line-height) - Maximum readability for financial details
   - Body (Small): Inter Regular/14px/relaxed - Supporting text and captions
+  - Body (Medium): Inter Medium/16-20px/normal - Emphasized text
   - Numbers (Large Metrics): Inter Bold/40px/tight - Tabular numerals for financial figures
-  - Numbers (Data): JetBrains Mono Medium/14px/normal - Monospace for tables and precise figures
+  - Numbers (Data): JetBrains Mono Medium/14px/normal - Monospace with tabular numerals for tables and precise figures
 
 ## Animations
 Animations should feel purposeful and professional, never gratuitous. Use motion to guide attention to key metrics, provide feedback on interactions, and create smooth transitions between states. The repayment modeler should update in real-time (<100ms) to feel responsive. Section entrances should use subtle fade-up animations (300ms ease-out) to create rhythm without slowing comprehension. Hover states on cards and buttons should provide immediate tactile feedback (150ms). Chart animations should draw attention to data relationships through thoughtful sequencing (stagger by 50ms per element).

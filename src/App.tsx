@@ -178,7 +178,7 @@ function App() {
       </nav>
 
       <section id="overview" className="py-20 px-6 bg-gradient-to-br from-primary via-primary to-secondary relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, currentColor 10px, currentColor 11px)' }}></div>
+        <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, currentColor 10px, currentColor 11px)' }}></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -186,10 +186,10 @@ function App() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h1 className="font-display text-5xl md:text-6xl font-bold text-primary-foreground mb-4">
+            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-primary-foreground mb-4 leading-tight">
               455 Glen Iris Experience Center
             </h1>
-            <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto font-medium">
               SBA 7(a) Loan Request for Acquisition & Build-Out
             </p>
           </motion.div>
@@ -260,7 +260,7 @@ function App() {
 
       <section id="property" className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold mb-8 text-center">Property Showcase</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">Property Showcase</h2>
           <Card className="p-8">
             <div className="grid md:grid-cols-2 gap-8">
               <div>
@@ -315,11 +315,11 @@ function App() {
         </div>
       </section>
 
-      <section id="business" className="py-20 px-6 bg-muted/30">
+      <section id="business" className="py-20 px-6 bg-gradient-to-br from-secondary/5 via-accent/5 to-success/5">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Four Synergistic Pillars</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Four Synergistic Pillars</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-medium">
               Diversified revenue streams creating a resilient, scalable business model
             </p>
           </div>
@@ -391,8 +391,8 @@ function App() {
       <section id="financials" className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Comprehensive Financial Model</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Comprehensive Financial Model</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-medium">
               Interactive revenue and expense modeling with six diversified income streams
             </p>
           </div>
@@ -752,11 +752,11 @@ function App() {
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-muted/30">
+      <section className="py-20 px-6 bg-gradient-to-br from-secondary/5 via-accent/5 to-success/5">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Leadership</h2>
-            <p className="text-xl text-muted-foreground">Experienced founder with proven track record</p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Leadership</h2>
+            <p className="text-xl text-muted-foreground font-medium">Experienced founder with proven track record</p>
           </div>
 
           <Card className="p-8 max-w-3xl mx-auto">
@@ -782,8 +782,8 @@ function App() {
       <section id="lender" className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Lender Checklist</h2>
-            <p className="text-xl text-muted-foreground">Comprehensive documentation for underwriting review</p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Lender Checklist</h2>
+            <p className="text-xl text-muted-foreground font-medium">Comprehensive documentation for underwriting review</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 mb-8">

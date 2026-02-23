@@ -8,11 +8,17 @@
   
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 700;
   }
 }
 
 :root {
-  --background: oklch(0.98 0.01 255);
+  --background: oklch(0.985 0.005 255);
   --foreground: oklch(0.15 0.02 255);
   
   --card: oklch(1 0 0);
@@ -22,25 +28,25 @@
   --popover-foreground: oklch(0.15 0.02 255);
   
   --primary: oklch(0.25 0.04 255);
-  --primary-foreground: oklch(0.98 0.01 255);
+  --primary-foreground: oklch(0.985 0.005 255);
   
   --secondary: oklch(0.65 0.15 230);
-  --secondary-foreground: oklch(0.98 0.01 255);
+  --secondary-foreground: oklch(0.985 0.005 255);
   
-  --muted: oklch(0.96 0.01 255);
+  --muted: oklch(0.965 0.005 255);
   --muted-foreground: oklch(0.48 0.02 255);
   
   --accent: oklch(0.70 0.18 50);
-  --accent-foreground: oklch(0.98 0.01 255);
+  --accent-foreground: oklch(0.15 0.02 255);
   
   --success: oklch(0.65 0.15 165);
-  --success-foreground: oklch(0.98 0.01 255);
+  --success-foreground: oklch(0.985 0.005 255);
   
   --destructive: oklch(0.55 0.22 25);
-  --destructive-foreground: oklch(0.98 0.01 255);
+  --destructive-foreground: oklch(0.985 0.005 255);
   
-  --border: oklch(0.90 0.01 255);
-  --input: oklch(0.90 0.01 255);
+  --border: oklch(0.92 0.005 255);
+  --input: oklch(0.92 0.005 255);
   --ring: oklch(0.65 0.15 230);
   
   --radius: 0.75rem;
@@ -79,10 +85,12 @@
 
 .font-display {
   font-family: 'Playfair Display', serif;
+  font-weight: 700;
 }
 
 .font-mono {
   font-family: 'JetBrains Mono', monospace;
+  font-feature-settings: 'tnum' 1;
 }
 
 @media print {
