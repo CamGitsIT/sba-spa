@@ -34,11 +34,11 @@ This is a sophisticated financial presentation tool with multiple interactive fe
 - **Success criteria**: Clear visual hierarchy, digestible descriptions, reinforces business strategy
 
 ### Interactive Financial Modeler
-- **Functionality**: Live calculator with sliders for six revenue drivers (training seats, retrofit projects, retail locations, consulting hours, maintenance contracts, affiliate partnerships) that updates comprehensive financial metrics and charts in real-time
-- **Purpose**: Allow lender to explore scenarios, validate projections independently, and understand full P&L including revenue mix, expenses, margins, and break-even analysis
-- **Trigger**: User interacts with slider controls or scenario buttons (Floor/Base/Stretch)
-- **Progression**: Default loads Base scenario → User adjusts sliders → Revenue, Gross Profit, Gross Margin, NOI, Net Margin, and DSCR update instantly → Multiple charts re-render (5-year projections, revenue mix pie chart, expense breakdown, revenue driver details) → Scenario buttons allow quick comparison
-- **Success criteria**: Smooth real-time updates (<100ms), accurate calculations match business plan, intuitive controls, DSCR always prominently displayed, all six revenue streams visible and adjustable, expense breakdown shows COGS/fixed/variable costs, break-even analysis clearly displayed
+- **Functionality**: Live calculator with sliders for six revenue drivers (training seats, retrofit projects, retail locations, consulting hours, maintenance contracts, affiliate partnerships) that updates comprehensive financial metrics and charts in real-time, plus a side-by-side scenario comparison modal
+- **Purpose**: Allow lender to explore scenarios, validate projections independently, and understand full P&L including revenue mix, expenses, margins, break-even analysis, and compare all three scenarios simultaneously
+- **Trigger**: User interacts with slider controls or scenario buttons (Floor/Base/Stretch), or clicks "Compare Scenarios" button
+- **Progression**: Default loads Base scenario → User adjusts sliders → Revenue, Gross Profit, Gross Margin, NOI, Net Margin, and DSCR update instantly → Multiple charts re-render (5-year projections, revenue mix pie chart, expense breakdown, revenue driver details) → Scenario buttons allow quick comparison → "Compare Scenarios" button opens modal → Modal displays all three scenarios side-by-side with detailed metrics, revenue driver assumptions table, revenue mix breakdown, and comparison chart → User can apply any scenario from modal
+- **Success criteria**: Smooth real-time updates (<100ms), accurate calculations match business plan, intuitive controls, DSCR always prominently displayed, all six revenue streams visible and adjustable, expense breakdown shows COGS/fixed/variable costs, break-even analysis clearly displayed, comparison modal provides clear visual differentiation between scenarios with actionable buttons
 
 ### TCO Comparison Charts
 - **Functionality**: Visual comparison charts showing 77% cost savings vs competitors

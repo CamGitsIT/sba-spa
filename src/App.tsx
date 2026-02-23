@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Building, ChartLine, Target, CurrencyDollar, Users, TrendUp, CheckCircle, FileText, Wrench, Storefront, GraduationCap, Heart, Headset, CirclesThreePlus, Handshake } from '@phosphor-icons/react'
+import { Building, ChartLine, Target, CurrencyDollar, Users, TrendUp, CheckCircle, FileText, Wrench, Storefront, GraduationCap, Heart, Headset, CirclesThreePlus, Handshake, ArrowsLeftRight } from '@phosphor-icons/react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -15,6 +15,7 @@ import { useKV } from '@github/spark/hooks'
 
 function App() {
   const [leadershipModalOpen, setLeadershipModalOpen] = useState(false)
+  const [comparisonModalOpen, setComparisonModalOpen] = useState(false)
   const [scenario, setScenario] = useKV('financial-scenario', 'base')
   const [trainingSeats, setTrainingSeats] = useKV('training-seats', '50')
   const [retrofitProjects, setRetrofitProjects] = useKV('retrofit-projects', '30')
@@ -131,6 +132,33 @@ function App() {
     setMaintenanceContracts(values.maintenance.toString())
     setAffiliateDeals(values.affiliate.toString())
   }
+
+  const floorFinancials = calculateFinancials(
+    scenarios.floor.training,
+    scenarios.floor.retrofit,
+    scenarios.floor.retail,
+    scenarios.floor.consulting,
+    scenarios.floor.maintenance,
+    scenarios.floor.affiliate
+  )
+
+  const baseFinancials = calculateFinancials(
+    scenarios.base.training,
+    scenarios.base.retrofit,
+    scenarios.base.retail,
+    scenarios.base.consulting,
+    scenarios.base.maintenance,
+    scenarios.base.affiliate
+  )
+
+  const stretchFinancials = calculateFinancials(
+    scenarios.stretch.training,
+    scenarios.stretch.retrofit,
+    scenarios.stretch.retail,
+    scenarios.stretch.consulting,
+    scenarios.stretch.maintenance,
+    scenarios.stretch.affiliate
+  )
 
   return (
     <div className="min-h-screen bg-background">
@@ -370,13 +398,23 @@ function App() {
           </div>
 
           <Card className="p-8 mb-8">
-            <Tabs value={scenario} onValueChange={setScenarioValues} className="mb-8">
-              <TabsList className="grid w-full max-w-md mx-auto grid-cols-3">
-                <TabsTrigger value="floor">Conservative</TabsTrigger>
-                <TabsTrigger value="base">Base Case</TabsTrigger>
-                <TabsTrigger value="stretch">Growth</TabsTrigger>
-              </TabsList>
-            </Tabs>
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+              <Tabs value={scenario} onValueChange={setScenarioValues} className="flex-1">
+                <TabsList className="grid w-full max-w-md grid-cols-3">
+                  <TabsTrigger value="floor">Conservative</TabsTrigger>
+                  <TabsTrigger value="base">Base Case</TabsTrigger>
+                  <TabsTrigger value="stretch">Growth</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <Button 
+                onClick={() => setComparisonModalOpen(true)}
+                variant="outline"
+                className="gap-2"
+              >
+                <ArrowsLeftRight size={20} weight="bold" />
+                Compare Scenarios
+              </Button>
+            </div>
 
             <div className="grid md:grid-cols-3 gap-6 mb-8">
               <div className="space-y-3">
@@ -897,6 +935,304 @@ function App() {
                 <strong>Cameron Champion</strong><br />
                 Founder & CEO, OverIT LLC
               </p>
+            </div>
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={comparisonModalOpen} onOpenChange={setComparisonModalOpen}>
+        <DialogContent className="max-w-7xl max-h-[90vh]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl flex items-center gap-2">
+              <ArrowsLeftRight size={28} weight="bold" className="text-secondary" />
+              Scenario Comparison Analysis
+            </DialogTitle>
+          </DialogHeader>
+          <ScrollArea className="max-h-[70vh] pr-4">
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card className="p-6 border-2 border-muted">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold">Conservative</h3>
+                    <Badge variant="outline">Floor</Badge>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">Revenue</span>
+                      <span className="font-mono text-xl font-bold">${(floorFinancials.revenue / 1000).toFixed(0)}K</span>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">Gross Profit</span>
+                      <span className="font-mono font-semibold">${(floorFinancials.grossProfit / 1000).toFixed(0)}K</span>
+                    </div>
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">Gross Margin</span>
+                      <span className="font-mono font-semibold">{floorFinancials.grossMargin.toFixed(1)}%</span>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">NOI</span>
+                      <span className="font-mono font-semibold">${(floorFinancials.noi / 1000).toFixed(0)}K</span>
+                    </div>
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">Net Margin</span>
+                      <span className="font-mono font-semibold">{floorFinancials.netMargin.toFixed(1)}%</span>
+                    </div>
+                    <Separator className="my-3" />
+                    <div className="flex justify-between items-baseline p-3 bg-muted/50 rounded-lg">
+                      <span className="text-sm font-semibold">DSCR</span>
+                      <span className="font-mono text-xl font-bold text-success">{floorFinancials.dscr}×</span>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 border-2 border-secondary shadow-lg">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold">Base Case</h3>
+                    <Badge className="bg-secondary text-secondary-foreground">Recommended</Badge>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">Revenue</span>
+                      <span className="font-mono text-xl font-bold">${(baseFinancials.revenue / 1000).toFixed(0)}K</span>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">Gross Profit</span>
+                      <span className="font-mono font-semibold">${(baseFinancials.grossProfit / 1000).toFixed(0)}K</span>
+                    </div>
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">Gross Margin</span>
+                      <span className="font-mono font-semibold">{baseFinancials.grossMargin.toFixed(1)}%</span>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">NOI</span>
+                      <span className="font-mono font-semibold">${(baseFinancials.noi / 1000).toFixed(0)}K</span>
+                    </div>
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">Net Margin</span>
+                      <span className="font-mono font-semibold">{baseFinancials.netMargin.toFixed(1)}%</span>
+                    </div>
+                    <Separator className="my-3" />
+                    <div className="flex justify-between items-baseline p-3 bg-success/10 rounded-lg border border-success/20">
+                      <span className="text-sm font-semibold">DSCR</span>
+                      <span className="font-mono text-xl font-bold text-success">{baseFinancials.dscr}×</span>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 border-2 border-muted">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold">Growth</h3>
+                    <Badge variant="outline">Stretch</Badge>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">Revenue</span>
+                      <span className="font-mono text-xl font-bold">${(stretchFinancials.revenue / 1000).toFixed(0)}K</span>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">Gross Profit</span>
+                      <span className="font-mono font-semibold">${(stretchFinancials.grossProfit / 1000).toFixed(0)}K</span>
+                    </div>
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">Gross Margin</span>
+                      <span className="font-mono font-semibold">{stretchFinancials.grossMargin.toFixed(1)}%</span>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">NOI</span>
+                      <span className="font-mono font-semibold">${(stretchFinancials.noi / 1000).toFixed(0)}K</span>
+                    </div>
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-sm text-muted-foreground">Net Margin</span>
+                      <span className="font-mono font-semibold">{stretchFinancials.netMargin.toFixed(1)}%</span>
+                    </div>
+                    <Separator className="my-3" />
+                    <div className="flex justify-between items-baseline p-3 bg-muted/50 rounded-lg">
+                      <span className="text-sm font-semibold">DSCR</span>
+                      <span className="font-mono text-xl font-bold text-success">{stretchFinancials.dscr}×</span>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4">Revenue Driver Assumptions</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left py-3 px-4 font-semibold">Revenue Stream</th>
+                        <th className="text-center py-3 px-4 font-semibold">Conservative</th>
+                        <th className="text-center py-3 px-4 font-semibold bg-secondary/5">Base Case</th>
+                        <th className="text-center py-3 px-4 font-semibold">Growth</th>
+                      </tr>
+                    </thead>
+                    <tbody className="font-mono">
+                      <tr className="border-b">
+                        <td className="py-3 px-4">Training Seats/Quarter</td>
+                        <td className="text-center py-3 px-4">{scenarios.floor.training}</td>
+                        <td className="text-center py-3 px-4 bg-secondary/5 font-semibold">{scenarios.base.training}</td>
+                        <td className="text-center py-3 px-4">{scenarios.stretch.training}</td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="py-3 px-4">Retrofit Projects/Year</td>
+                        <td className="text-center py-3 px-4">{scenarios.floor.retrofit}</td>
+                        <td className="text-center py-3 px-4 bg-secondary/5 font-semibold">{scenarios.base.retrofit}</td>
+                        <td className="text-center py-3 px-4">{scenarios.stretch.retrofit}</td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="py-3 px-4">Retail Locations</td>
+                        <td className="text-center py-3 px-4">{scenarios.floor.retail}</td>
+                        <td className="text-center py-3 px-4 bg-secondary/5 font-semibold">{scenarios.base.retail}</td>
+                        <td className="text-center py-3 px-4">{scenarios.stretch.retail}</td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="py-3 px-4">Consulting Hours/Month</td>
+                        <td className="text-center py-3 px-4">{scenarios.floor.consulting}</td>
+                        <td className="text-center py-3 px-4 bg-secondary/5 font-semibold">{scenarios.base.consulting}</td>
+                        <td className="text-center py-3 px-4">{scenarios.stretch.consulting}</td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="py-3 px-4">Maintenance Contracts</td>
+                        <td className="text-center py-3 px-4">{scenarios.floor.maintenance}</td>
+                        <td className="text-center py-3 px-4 bg-secondary/5 font-semibold">{scenarios.base.maintenance}</td>
+                        <td className="text-center py-3 px-4">{scenarios.stretch.maintenance}</td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="py-3 px-4">Affiliate Partnerships</td>
+                        <td className="text-center py-3 px-4">{scenarios.floor.affiliate}</td>
+                        <td className="text-center py-3 px-4 bg-secondary/5 font-semibold">{scenarios.base.affiliate}</td>
+                        <td className="text-center py-3 px-4">{scenarios.stretch.affiliate}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4">Revenue Mix Comparison</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground mb-3 text-center">Conservative</p>
+                    <div className="space-y-2">
+                      {[
+                        { label: 'Training', value: floorFinancials.revenueByStream.training, icon: <GraduationCap size={16} weight="duotone" /> },
+                        { label: 'Retrofit', value: floorFinancials.revenueByStream.retrofit, icon: <Wrench size={16} weight="duotone" /> },
+                        { label: 'Retail', value: floorFinancials.revenueByStream.retail, icon: <Storefront size={16} weight="duotone" /> },
+                        { label: 'Consulting', value: floorFinancials.revenueByStream.consulting, icon: <Headset size={16} weight="duotone" /> },
+                        { label: 'Maintenance', value: floorFinancials.revenueByStream.maintenance, icon: <CirclesThreePlus size={16} weight="duotone" /> },
+                        { label: 'Affiliate', value: floorFinancials.revenueByStream.affiliate, icon: <Handshake size={16} weight="duotone" /> }
+                      ].map((item, idx) => (
+                        <div key={idx} className="flex items-center justify-between p-2 bg-muted/30 rounded text-sm">
+                          <div className="flex items-center gap-2">
+                            {item.icon}
+                            <span>{item.label}</span>
+                          </div>
+                          <span className="font-mono font-semibold">${(item.value / 1000).toFixed(0)}K</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground mb-3 text-center">Base Case</p>
+                    <div className="space-y-2">
+                      {[
+                        { label: 'Training', value: baseFinancials.revenueByStream.training, icon: <GraduationCap size={16} weight="duotone" /> },
+                        { label: 'Retrofit', value: baseFinancials.revenueByStream.retrofit, icon: <Wrench size={16} weight="duotone" /> },
+                        { label: 'Retail', value: baseFinancials.revenueByStream.retail, icon: <Storefront size={16} weight="duotone" /> },
+                        { label: 'Consulting', value: baseFinancials.revenueByStream.consulting, icon: <Headset size={16} weight="duotone" /> },
+                        { label: 'Maintenance', value: baseFinancials.revenueByStream.maintenance, icon: <CirclesThreePlus size={16} weight="duotone" /> },
+                        { label: 'Affiliate', value: baseFinancials.revenueByStream.affiliate, icon: <Handshake size={16} weight="duotone" /> }
+                      ].map((item, idx) => (
+                        <div key={idx} className="flex items-center justify-between p-2 bg-secondary/10 rounded text-sm">
+                          <div className="flex items-center gap-2">
+                            {item.icon}
+                            <span>{item.label}</span>
+                          </div>
+                          <span className="font-mono font-semibold">${(item.value / 1000).toFixed(0)}K</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground mb-3 text-center">Growth</p>
+                    <div className="space-y-2">
+                      {[
+                        { label: 'Training', value: stretchFinancials.revenueByStream.training, icon: <GraduationCap size={16} weight="duotone" /> },
+                        { label: 'Retrofit', value: stretchFinancials.revenueByStream.retrofit, icon: <Wrench size={16} weight="duotone" /> },
+                        { label: 'Retail', value: stretchFinancials.revenueByStream.retail, icon: <Storefront size={16} weight="duotone" /> },
+                        { label: 'Consulting', value: stretchFinancials.revenueByStream.consulting, icon: <Headset size={16} weight="duotone" /> },
+                        { label: 'Maintenance', value: stretchFinancials.revenueByStream.maintenance, icon: <CirclesThreePlus size={16} weight="duotone" /> },
+                        { label: 'Affiliate', value: stretchFinancials.revenueByStream.affiliate, icon: <Handshake size={16} weight="duotone" /> }
+                      ].map((item, idx) => (
+                        <div key={idx} className="flex items-center justify-between p-2 bg-muted/30 rounded text-sm">
+                          <div className="flex items-center gap-2">
+                            {item.icon}
+                            <span>{item.label}</span>
+                          </div>
+                          <span className="font-mono font-semibold">${(item.value / 1000).toFixed(0)}K</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4">Key Metrics Comparison</h3>
+                <div className="h-80">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={[
+                      {
+                        name: 'Revenue',
+                        Conservative: floorFinancials.revenue / 1000,
+                        'Base Case': baseFinancials.revenue / 1000,
+                        Growth: stretchFinancials.revenue / 1000
+                      },
+                      {
+                        name: 'Gross Profit',
+                        Conservative: floorFinancials.grossProfit / 1000,
+                        'Base Case': baseFinancials.grossProfit / 1000,
+                        Growth: stretchFinancials.grossProfit / 1000
+                      },
+                      {
+                        name: 'NOI',
+                        Conservative: floorFinancials.noi / 1000,
+                        'Base Case': baseFinancials.noi / 1000,
+                        Growth: stretchFinancials.noi / 1000
+                      }
+                    ]}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip formatter={(value) => `$${Number(value).toFixed(0)}K`} />
+                      <Legend />
+                      <Bar dataKey="Conservative" fill="hsl(var(--muted-foreground))" />
+                      <Bar dataKey="Base Case" fill="hsl(var(--secondary))" />
+                      <Bar dataKey="Growth" fill="hsl(var(--accent))" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </Card>
+
+              <div className="flex justify-center gap-4 pt-4">
+                <Button onClick={() => { setScenarioValues('floor'); setComparisonModalOpen(false); }} variant="outline">
+                  Apply Conservative
+                </Button>
+                <Button onClick={() => { setScenarioValues('base'); setComparisonModalOpen(false); }} className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+                  Apply Base Case
+                </Button>
+                <Button onClick={() => { setScenarioValues('stretch'); setComparisonModalOpen(false); }} variant="outline">
+                  Apply Growth
+                </Button>
+              </div>
             </div>
           </ScrollArea>
         </DialogContent>
