@@ -68,6 +68,13 @@ This is a sophisticated financial presentation tool with multiple interactive fe
 - **Progression**: Print dialog opens → Page reformats → Navigation hides → Interactive elements flatten → Page breaks optimized → Clean PDF exports
 - **Success criteria**: Readable print output, no cut-off content, maintains professional appearance
 
+### Theme Switcher
+- **Functionality**: Dropdown menu in navigation bar allowing selection between six color schemes (UniFi Blue, Emerald Growth, Amber Wealth, Slate Professional, Purple Innovation, Crimson Power)
+- **Purpose**: Allow users to customize branding to match their company's visual identity or personal preference while maintaining professional appearance
+- **Trigger**: Click Theme button in navigation
+- **Progression**: User clicks Theme button → Dropdown opens showing all theme options with color swatches → User selects theme → Colors transition smoothly across entire application → Selection persists between sessions
+- **Success criteria**: All six themes applied consistently, smooth transitions (<300ms), theme persists via useKV, all content remains readable with proper contrast ratios in each theme
+
 ## Edge Case Handling
 - **Missing Images**: Display placeholder with descriptive text if image fails to load
 - **Calculation Errors**: Validate slider inputs to prevent division by zero or negative values in DSCR calculations
@@ -76,24 +83,56 @@ This is a sophisticated financial presentation tool with multiple interactive fe
 - **Long Content in Modals**: Enable internal scroll when content exceeds viewport height
 - **Browser without JS**: Display static version with critical information still accessible
 - **Slow Network**: Show loading states for images, lazy load below-fold content
+- **Theme Switching During Animation**: Prevent concurrent theme changes, disable button during transition
+- **Invalid Theme Storage**: Fallback to default UniFi Blue theme if stored theme name is corrupted or unknown
 
 ## Design Direction
 The design should evoke trust, sophistication, and innovation - feeling like a fintech startup meets enterprise SaaS. It must balance being visually modern (to show the business understands technology) while maintaining financial gravitas (to inspire confidence in loan underwriters). The aesthetic should whisper "we know what we're doing" through attention to detail, smooth interactions, and data-driven storytelling.
 
 ## Color Selection
-A professional tech-finance palette inspired by UniFi's brand with vibrant, energetic colors that convey confidence and innovation:
+Six professionally designed themes, each with carefully selected color palettes that maintain WCAG AA accessibility standards:
 
+**1. UniFi Blue (Default)** - Professional tech-finance palette with vibrant blues
 - **Primary Color**: `oklch(0.25 0.04 255)` - Deep navy blue that communicates trust, stability, and financial expertise
-- **Secondary Colors**: 
-  - Sky Blue `oklch(0.65 0.15 230)` - UniFi-inspired technology blue for interactive elements and data visualization
-  - Emerald `oklch(0.65 0.15 165)` - Success color for positive metrics (DSCR, profitability, savings)
-- **Accent Color**: `oklch(0.70 0.18 50)` - Warm amber for calls-to-action and important highlights that demand attention
-- **Foreground/Background Pairings**: 
-  - Primary Navy: White text (#FFFFFF) - Ratio 16.2:1 ✓
-  - Sky Blue: White text (#FFFFFF) - Ratio 5.1:1 ✓
-  - Emerald: White text (#FFFFFF) - Ratio 4.8:1 ✓
-  - Background Light (#F8FAFC): Dark Navy - Ratio 15.8:1 ✓
-- **Gradient Backgrounds**: Sections use subtle gradients blending secondary/5, accent/5, and success/5 for visual variety and depth without overwhelming content
+- **Secondary Color**: `oklch(0.65 0.15 230)` - Sky Blue for interactive elements and data visualization
+- **Accent Color**: `oklch(0.70 0.18 50)` - Warm amber for calls-to-action
+- **Success Color**: `oklch(0.65 0.15 165)` - Emerald for positive metrics
+
+**2. Emerald Growth** - Fresh, nature-inspired greens emphasizing growth
+- **Primary Color**: `oklch(0.28 0.10 165)` - Forest green conveying growth and prosperity
+- **Secondary Color**: `oklch(0.60 0.16 170)` - Vibrant teal for engagement
+- **Accent Color**: `oklch(0.75 0.18 145)` - Bright lime for highlights
+- **Success Color**: `oklch(0.65 0.18 165)` - Rich emerald for achievements
+
+**3. Amber Wealth** - Warm, luxurious gold tones conveying prosperity
+- **Primary Color**: `oklch(0.30 0.08 50)` - Deep bronze for authority
+- **Secondary Color**: `oklch(0.68 0.16 60)` - Golden yellow for positivity
+- **Accent Color**: `oklch(0.72 0.20 45)` - Bright gold for emphasis
+- **Success Color**: `oklch(0.65 0.15 165)` - Emerald contrast for validation
+
+**4. Slate Professional** - Sophisticated grayscale for maximum formality
+- **Primary Color**: `oklch(0.22 0.015 255)` - Near-black for gravitas
+- **Secondary Color**: `oklch(0.58 0.015 255)` - Medium gray for balance
+- **Accent Color**: `oklch(0.45 0.020 255)` - Dark slate for subtle emphasis
+- **Success Color**: `oklch(0.65 0.15 165)` - Emerald for positive highlights
+
+**5. Purple Innovation** - Creative, modern purples for tech-forward brands
+- **Primary Color**: `oklch(0.30 0.12 285)` - Deep violet for innovation
+- **Secondary Color**: `oklch(0.62 0.18 280)` - Vivid purple for creativity
+- **Accent Color**: `oklch(0.70 0.20 295)` - Bright orchid for action
+- **Success Color**: `oklch(0.65 0.15 165)` - Emerald for achievement
+
+**6. Crimson Power** - Bold, confident reds for impact and urgency
+- **Primary Color**: `oklch(0.32 0.15 15)` - Deep burgundy for authority
+- **Secondary Color**: `oklch(0.60 0.20 20)` - Bold red for energy
+- **Accent Color**: `oklch(0.68 0.22 25)` - Bright coral for urgency
+- **Success Color**: `oklch(0.65 0.15 165)` - Emerald for balance
+
+All themes maintain proper contrast ratios:
+- Primary/Primary-Foreground: 16:1+ ✓
+- Secondary/Secondary-Foreground: 5:1+ ✓
+- Accent/Accent-Foreground: 4.5:1+ ✓
+- Success/Success-Foreground: 4.8:1+ ✓
 
 ## Font Selection
 Typography conveys modern professionalism with a hint of editorial sophistication. Font families are properly applied with appropriate weights and features.

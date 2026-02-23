@@ -12,8 +12,11 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { useKV } from '@github/spark/hooks'
+import { ThemeSelector } from '@/components/ThemeSelector'
+import { useTheme } from '@/hooks/use-theme'
 
 function App() {
+  useTheme()
   const [leadershipModalOpen, setLeadershipModalOpen] = useState(false)
   const [comparisonModalOpen, setComparisonModalOpen] = useState(false)
   const [scenario, setScenario] = useKV('financial-scenario', 'base')
@@ -166,12 +169,16 @@ function App() {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-primary-foreground">OverIT • 455 Glen Iris</h2>
-            <div className="hidden md:flex gap-6">
+            <div className="hidden md:flex items-center gap-6">
               <a href="#overview" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Overview</a>
               <a href="#property" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Property</a>
               <a href="#business" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Business Model</a>
               <a href="#financials" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Financials</a>
               <a href="#lender" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">For Lender</a>
+              <ThemeSelector />
+            </div>
+            <div className="md:hidden">
+              <ThemeSelector />
             </div>
           </div>
         </div>
