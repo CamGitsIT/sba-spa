@@ -1,5 +1,5 @@
-import { useKV } from '@github/spark/hooks'
 import { useState, useEffect } from 'react'
+import { useKV } from '@/hooks/use-kv'
 
 export interface MarketDataPoint {
   metric: string
@@ -25,72 +25,49 @@ export interface IndustryBenchmark {
   variance: number
 }
 
+const staticMarketData: MarketDataPoint[] = [
+  { metric: 'Network Hardware Market Size', value: 52.4, change: 8.3, trend: 'up', source: 'Gartner 2024', lastUpdated: new Date() },
+  { metric: 'IT Training Certification Demand', value: 18.7, change: 12.1, trend: 'up', source: 'IDC Research', lastUpdated: new Date() },
+  { metric: 'Structured Cabling Market', value: 14.2, change: 6.5, trend: 'up', source: 'MarketsandMarkets 2024', lastUpdated: new Date() },
+  { metric: 'Managed Services Revenue', value: 29.8, change: 9.7, trend: 'up', source: 'CompTIA 2024', lastUpdated: new Date() },
+  { metric: 'Fiber Optic Installation Growth', value: 11.3, change: 15.2, trend: 'up', source: 'Grand View Research', lastUpdated: new Date() },
+  { metric: 'Security Systems Integration', value: 7.6, change: -2.1, trend: 'down', source: 'IHS Markit 2024', lastUpdated: new Date() },
+  { metric: 'Cloud Networking Adoption', value: 38.5, change: 22.4, trend: 'up', source: 'Forrester 2024', lastUpdated: new Date() },
+  { metric: 'SMB IT Spending Growth', value: 5.9, change: 3.8, trend: 'neutral', source: 'Gartner SMB 2024', lastUpdated: new Date() },
+]
+
+const staticCompetitors: CompetitorData[] = [
+  { name: 'NetEdge Solutions', avgInstallCost: 42000, avgProjectTime: 45, customerSatisfaction: 82, marketShare: 18 },
+  { name: 'Vertex IT Services', avgInstallCost: 38500, avgProjectTime: 60, customerSatisfaction: 76, marketShare: 14 },
+  { name: 'Cabletech Pro', avgInstallCost: 31000, avgProjectTime: 30, customerSatisfaction: 88, marketShare: 22 },
+  { name: 'TechBridge Networks', avgInstallCost: 55000, avgProjectTime: 75, customerSatisfaction: 91, marketShare: 11 },
+  { name: 'Apex Infrastructure', avgInstallCost: 47500, avgProjectTime: 55, customerSatisfaction: 79, marketShare: 9 },
+]
+
+const staticBenchmarks: IndustryBenchmark[] = [
+  { category: 'Gross Margin', industry: 42, overit: 58, variance: 38 },
+  { category: 'Customer Acquisition Cost', industry: 8500, overit: 5200, variance: 39 },
+  { category: 'Project Completion Rate', industry: 87, overit: 96, variance: 10 },
+  { category: 'Customer Retention Rate', industry: 74, overit: 89, variance: 20 },
+  { category: 'Revenue per Employee', industry: 185000, overit: 240000, variance: 30 },
+  { category: 'DSCR', industry: 1.15, overit: 1.42, variance: 23 },
+]
+
 export const useMarketData = () => {
-  const [marketData, setMarketData] = useKV<MarketDataPoint[]>('market-data', [])
-  const [competitors, setCompetitors] = useKV<CompetitorData[]>('competitor-data', [])
-  const [benchmarks, setBenchmarks] = useKV<IndustryBenchmark[]>('industry-benchmarks', [])
+  const [marketData, setMarketData] = useKV<MarketDataPoint[]>('market-data', staticMarketData)
+  const [competitors, setCompetitors] = useKV<CompetitorData[]>('competitor-data', staticCompetitors)
+  const [benchmarks, setBenchmarks] = useKV<IndustryBenchmark[]>('industry-benchmarks', staticBenchmarks)
   const [lastRefresh, setLastRefresh] = useKV<string>('market-data-refresh', '')
   const [isLoading, setIsLoading] = useState(false)
-
-  const generateMarketData = async (): Promise<MarketDataPoint[]> => {
-    const prompt = window.spark.llmPrompt`Generate realistic market data for the network infrastructure and IT training industry. Return exactly 8 market metrics as a JSON object with a single property "metrics" containing an array of objects with these fields:
-    - metric: string (name like "Network Hardware Market Size", "Training Certification Demand", etc.)
-    - value: number (realistic current value)
-    - change: number (percentage change, positive or negative)
-    - trend: "up" | "down" | "neutral"
-    - source: string (realistic source like "Gartner 2024" or "IDC Research")
-    
-    Return as JSON in format: {"metrics": [...]}`
-
-    const response = await window.spark.llm(prompt, 'gpt-4o-mini', true)
-    const parsed = JSON.parse(response)
-    return parsed.metrics.map((m: any) => ({
-      ...m,
-      lastUpdated: new Date()
-    }))
-  }
-
-  const generateCompetitorData = async (): Promise<CompetitorData[]> => {
-    const prompt = window.spark.llmPrompt`Generate 5 realistic competitors for a network infrastructure and IT training business. Return as a JSON object with a single property "competitors" containing an array with these fields:
-    - name: string (realistic competitor name)
-    - avgInstallCost: number (average installation cost in dollars, range 25000-60000)
-    - avgProjectTime: number (days to complete, range 14-90)
-    - customerSatisfaction: number (percentage 60-95)
-    - marketShare: number (percentage 5-25)
-    
-    Return as JSON in format: {"competitors": [...]}`
-
-    const response = await window.spark.llm(prompt, 'gpt-4o-mini', true)
-    const parsed = JSON.parse(response)
-    return parsed.competitors
-  }
-
-  const generateBenchmarks = async (): Promise<IndustryBenchmark[]> => {
-    const prompt = window.spark.llmPrompt`Generate 6 industry benchmarks comparing OverIT (a network infrastructure company) to industry standards. Return as a JSON object with a single property "benchmarks" containing an array with these fields:
-    - category: string (metric name like "Gross Margin", "Customer Acquisition Cost", etc.)
-    - industry: number (industry average value as percentage or dollar amount)
-    - overit: number (OverIT's value, should be better in most cases)
-    - variance: number (percentage difference, positive means OverIT is better)
-    
-    Return as JSON in format: {"benchmarks": [...]}`
-
-    const response = await window.spark.llm(prompt, 'gpt-4o-mini', true)
-    const parsed = JSON.parse(response)
-    return parsed.benchmarks
-  }
 
   const refreshMarketData = async () => {
     setIsLoading(true)
     try {
-      const [newMarketData, newCompetitors, newBenchmarks] = await Promise.all([
-        generateMarketData(),
-        generateCompetitorData(),
-        generateBenchmarks()
-      ])
-      
-      setMarketData(newMarketData)
-      setCompetitors(newCompetitors)
-      setBenchmarks(newBenchmarks)
+      // Simulate a brief refresh with static data (Spark AI runtime not available outside Spark)
+      await new Promise(resolve => setTimeout(resolve, 500))
+      setMarketData(staticMarketData.map(m => ({ ...m, lastUpdated: new Date() })))
+      setCompetitors(staticCompetitors)
+      setBenchmarks(staticBenchmarks)
       setLastRefresh(new Date().toISOString())
     } catch (error) {
       console.error('Failed to refresh market data:', error)
@@ -114,3 +91,4 @@ export const useMarketData = () => {
     refreshMarketData
   }
 }
+
