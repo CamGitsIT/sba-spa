@@ -15,6 +15,7 @@ import { useKV } from '@github/spark/hooks'
 import { ThemeSelector } from '@/components/ThemeSelector'
 import { useTheme } from '@/hooks/use-theme'
 import { AnimatedCounter } from '@/components/AnimatedCounter'
+import { Sparkline } from '@/components/Sparkline'
 
 function App() {
   useTheme()
@@ -105,6 +106,15 @@ function App() {
     { year: 'Year 4', revenue: 1100000, noi: 385000 },
     { year: 'Year 5', revenue: 1250000, noi: 437500 }
   ]
+
+  const sparklineData = {
+    revenue: [450, 580, 720, 820, 945, 1050, 1100, 1180, 1250],
+    grossProfit: [310, 400, 500, 580, 655, 730, 770, 820, 870],
+    noi: [158, 200, 252, 290, 331, 365, 385, 410, 438],
+    grossMargin: [68.8, 69.0, 69.4, 70.7, 69.3, 69.5, 70.0, 69.5, 69.6],
+    netMargin: [35.1, 34.5, 35.0, 35.4, 35.0, 34.8, 35.0, 34.7, 35.0],
+    dscr: [2.61, 3.30, 4.16, 4.78, 5.46, 6.02, 6.35, 6.76, 7.23]
+  }
 
   const tcoData = [
     { category: 'Traditional Install', cost: 45000 },
@@ -541,29 +551,47 @@ function App() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-              <Card className="p-4 bg-muted/50">
+              <Card className="p-4 bg-muted/50 hover:bg-muted/70 transition-colors">
                 <p className="text-xs text-muted-foreground mb-1">Revenue</p>
-                <p className="font-mono text-xl font-bold">${(currentFinancials.revenue / 1000).toFixed(0)}K</p>
+                <p className="font-mono text-xl font-bold mb-2">${(currentFinancials.revenue / 1000).toFixed(0)}K</p>
+                <div className="flex justify-center">
+                  <Sparkline data={sparklineData.revenue} width={100} height={30} trend="up" />
+                </div>
               </Card>
-              <Card className="p-4 bg-muted/50">
+              <Card className="p-4 bg-muted/50 hover:bg-muted/70 transition-colors">
                 <p className="text-xs text-muted-foreground mb-1">Gross Profit</p>
-                <p className="font-mono text-xl font-bold">${(currentFinancials.grossProfit / 1000).toFixed(0)}K</p>
+                <p className="font-mono text-xl font-bold mb-2">${(currentFinancials.grossProfit / 1000).toFixed(0)}K</p>
+                <div className="flex justify-center">
+                  <Sparkline data={sparklineData.grossProfit} width={100} height={30} trend="up" />
+                </div>
               </Card>
-              <Card className="p-4 bg-muted/50">
+              <Card className="p-4 bg-muted/50 hover:bg-muted/70 transition-colors">
                 <p className="text-xs text-muted-foreground mb-1">Gross Margin</p>
-                <p className="font-mono text-xl font-bold">{currentFinancials.grossMargin.toFixed(1)}%</p>
+                <p className="font-mono text-xl font-bold mb-2">{currentFinancials.grossMargin.toFixed(1)}%</p>
+                <div className="flex justify-center">
+                  <Sparkline data={sparklineData.grossMargin} width={100} height={30} trend="up" />
+                </div>
               </Card>
-              <Card className="p-4 bg-muted/50">
+              <Card className="p-4 bg-muted/50 hover:bg-muted/70 transition-colors">
                 <p className="text-xs text-muted-foreground mb-1">NOI</p>
-                <p className="font-mono text-xl font-bold">${(currentFinancials.noi / 1000).toFixed(0)}K</p>
+                <p className="font-mono text-xl font-bold mb-2">${(currentFinancials.noi / 1000).toFixed(0)}K</p>
+                <div className="flex justify-center">
+                  <Sparkline data={sparklineData.noi} width={100} height={30} trend="up" />
+                </div>
               </Card>
-              <Card className="p-4 bg-muted/50">
+              <Card className="p-4 bg-muted/50 hover:bg-muted/70 transition-colors">
                 <p className="text-xs text-muted-foreground mb-1">Net Margin</p>
-                <p className="font-mono text-xl font-bold">{currentFinancials.netMargin.toFixed(1)}%</p>
+                <p className="font-mono text-xl font-bold mb-2">{currentFinancials.netMargin.toFixed(1)}%</p>
+                <div className="flex justify-center">
+                  <Sparkline data={sparklineData.netMargin} width={100} height={30} trend="neutral" />
+                </div>
               </Card>
-              <Card className="p-4 bg-success/10 border-success">
+              <Card className="p-4 bg-success/10 border-success hover:bg-success/20 transition-colors">
                 <p className="text-xs text-muted-foreground mb-1">DSCR</p>
-                <p className="font-mono text-xl font-bold text-success">{currentFinancials.dscr}×</p>
+                <p className="font-mono text-xl font-bold text-success mb-2">{currentFinancials.dscr}×</p>
+                <div className="flex justify-center">
+                  <Sparkline data={sparklineData.dscr} width={100} height={30} trend="up" />
+                </div>
               </Card>
             </div>
 
