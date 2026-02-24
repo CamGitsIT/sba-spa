@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Badge } from '@/components/ui/badge'
 import { themes, defaultTheme } from '@/lib/themes'
-import { useKV } from '@github/spark/hooks'
+import { useKV } from '@/hooks/use-kv'
 
 export function ThemeSelector() {
   const [currentTheme, setCurrentTheme] = useKV('color-theme', defaultTheme)
