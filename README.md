@@ -1,23 +1,46 @@
-# ✨ Welcome to Your Spark Template!
-You've just launched your brand-new Spark Template Codespace — everything’s fired up and ready for you to explore, build, and create with Spark!
+# OverIT SBA 7(a) Loan Prospectus
 
-This template is your blank canvas. It comes with a minimal setup to help you get started quickly with Spark development.
+Interactive digital prospectus for the 455 Glen Iris Experience Center SBA 7(a) loan application. Built with React, Vite, and Tailwind CSS.
 
-🚀 What's Inside?
-- A clean, minimal Spark environment
-- Pre-configured for local development
-- Ready to scale with your ideas
-  
-🧠 What Can You Do?
+## 🚀 Getting Started
 
-Right now, this is just a starting point — the perfect place to begin building and testing your Spark applications.
+Install dependencies:
 
-🧹 Just Exploring?
-No problem! If you were just checking things out and don’t need to keep this code:
+```bash
+npm install
+```
 
-- Simply delete your Spark.
-- Everything will be cleaned up — no traces left behind.
+Start the local development server:
 
-📄 License For Spark Template Resources 
+```bash
+npm run dev
+```
+
+## 🔨 Build Command
+
+```bash
+npm run build
+```
+
+This compiles TypeScript and bundles the application with Vite. Output is written to the `dist/` directory.
+
+## 🚢 Deploy Command
+
+Deployment to GitHub Pages is automated via GitHub Actions on every push to the `main` branch.
+
+To trigger a manual deployment, go to the **Actions** tab in this repository and run the **"Deploy to GitHub Pages"** workflow.
+
+The live site is available at: `https://camgitsit.github.io/sba-spa/`
+
+## 🧪 Other Commands
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start local dev server |
+| `npm run build` | Production build |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run ESLint |
+
+## 📄 License
 
 The Spark Template files and resources from GitHub are licensed under the terms of the MIT license, Copyright GitHub, Inc.
