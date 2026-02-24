@@ -14,6 +14,7 @@ import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, Cart
 import { useKV } from '@github/spark/hooks'
 import { ThemeSelector } from '@/components/ThemeSelector'
 import { useTheme } from '@/hooks/use-theme'
+import { AnimatedCounter } from '@/components/AnimatedCounter'
 
 function App() {
   useTheme()
@@ -207,12 +208,20 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <Card className="p-8 bg-card/95 backdrop-blur">
+              <Card className="p-8 bg-card/95 backdrop-blur hover:shadow-2xl transition-shadow duration-300">
                 <div className="flex items-center gap-3 mb-3">
-                  <CurrencyDollar size={32} className="text-accent" weight="bold" />
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.3, type: "spring" }}
+                  >
+                    <CurrencyDollar size={32} className="text-accent" weight="bold" />
+                  </motion.div>
                   <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Loan Request</h3>
                 </div>
-                <p className="font-mono text-4xl font-bold text-foreground mb-2">$640,000</p>
+                <p className="font-mono text-4xl font-bold text-foreground mb-2">
+                  <AnimatedCounter end={640000} prefix="$" duration={2500} />
+                </p>
                 <p className="text-sm text-muted-foreground">Business acquisition & improvements</p>
               </Card>
             </motion.div>
@@ -222,12 +231,20 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Card className="p-8 bg-card/95 backdrop-blur">
+              <Card className="p-8 bg-card/95 backdrop-blur hover:shadow-2xl transition-shadow duration-300">
                 <div className="flex items-center gap-3 mb-3">
-                  <Building size={32} className="text-secondary" weight="bold" />
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.4, type: "spring" }}
+                  >
+                    <Building size={32} className="text-secondary" weight="bold" />
+                  </motion.div>
                   <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Appraisal Value</h3>
                 </div>
-                <p className="font-mono text-4xl font-bold text-foreground mb-2">$850,000</p>
+                <p className="font-mono text-4xl font-bold text-foreground mb-2">
+                  <AnimatedCounter end={850000} prefix="$" duration={2500} />
+                </p>
                 <p className="text-sm text-muted-foreground">Professional appraisal complete</p>
               </Card>
             </motion.div>
@@ -237,12 +254,20 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <Card className="p-8 bg-card/95 backdrop-blur border-2 border-success">
+              <Card className="p-8 bg-card/95 backdrop-blur border-2 border-success hover:shadow-2xl hover:border-success/60 transition-all duration-300">
                 <div className="flex items-center gap-3 mb-3">
-                  <TrendUp size={32} className="text-success" weight="bold" />
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5, type: "spring" }}
+                  >
+                    <TrendUp size={32} className="text-success" weight="bold" />
+                  </motion.div>
                   <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">DSCR</h3>
                 </div>
-                <p className="font-mono text-4xl font-bold text-success mb-2">2.61×</p>
+                <p className="font-mono text-4xl font-bold text-success mb-2">
+                  <AnimatedCounter end={2.61} decimals={2} suffix="×" duration={2500} />
+                </p>
                 <p className="text-sm text-muted-foreground">Strong debt service coverage</p>
               </Card>
             </motion.div>
@@ -545,24 +570,59 @@ function App() {
             <div className="grid md:grid-cols-2 gap-8 mb-8">
               <div>
                 <h3 className="text-xl font-semibold mb-4">5-Year Projections</h3>
-                <div className="h-80">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="h-80"
+                >
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={projectionData}>
-                      <CartesianGrid strokeDasharray="3 3" />
+                      <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                       <XAxis dataKey="year" />
                       <YAxis />
-                      <Tooltip formatter={(value) => `$${(value as number).toLocaleString()}`} />
+                      <Tooltip 
+                        formatter={(value) => `$${(value as number).toLocaleString()}`}
+                        contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }}
+                      />
                       <Legend />
-                      <Line type="monotone" dataKey="revenue" stroke="hsl(var(--secondary))" strokeWidth={2} name="Revenue" />
-                      <Line type="monotone" dataKey="noi" stroke="hsl(var(--success))" strokeWidth={2} name="NOI" />
+                      <Line 
+                        type="monotone" 
+                        dataKey="revenue" 
+                        stroke="hsl(var(--secondary))" 
+                        strokeWidth={3} 
+                        name="Revenue"
+                        dot={{ fill: 'hsl(var(--secondary))', strokeWidth: 2, r: 5 }}
+                        activeDot={{ r: 8 }}
+                        animationDuration={1500}
+                        animationBegin={0}
+                      />
+                      <Line 
+                        type="monotone" 
+                        dataKey="noi" 
+                        stroke="hsl(var(--success))" 
+                        strokeWidth={3} 
+                        name="NOI"
+                        dot={{ fill: 'hsl(var(--success))', strokeWidth: 2, r: 5 }}
+                        activeDot={{ r: 8 }}
+                        animationDuration={1500}
+                        animationBegin={200}
+                      />
                     </LineChart>
                   </ResponsiveContainer>
-                </div>
+                </motion.div>
               </div>
 
               <div>
                 <h3 className="text-xl font-semibold mb-4">Revenue Mix by Stream</h3>
-                <div className="h-80">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="h-80"
+                >
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
@@ -574,15 +634,20 @@ function App() {
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="value"
+                        animationBegin={0}
+                        animationDuration={1200}
                       >
                         {revenueStreamData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.fill} />
                         ))}
                       </Pie>
-                      <Tooltip formatter={(value) => `$${(value as number).toLocaleString()}`} />
+                      <Tooltip 
+                        formatter={(value) => `$${(value as number).toLocaleString()}`}
+                        contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }}
+                      />
                     </PieChart>
                   </ResponsiveContainer>
-                </div>
+                </motion.div>
               </div>
             </div>
 
@@ -611,17 +676,32 @@ function App() {
 
               <Card className="p-6">
                 <h3 className="text-xl font-semibold mb-4">Expense Breakdown</h3>
-                <div className="h-64 mb-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="h-64 mb-4"
+                >
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={expenseBreakdownData}>
-                      <CartesianGrid strokeDasharray="3 3" />
+                      <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                       <XAxis dataKey="category" />
                       <YAxis />
-                      <Tooltip formatter={(value) => `$${(value as number).toLocaleString()}`} />
-                      <Bar dataKey="amount" fill="hsl(var(--destructive))" />
+                      <Tooltip 
+                        formatter={(value) => `$${(value as number).toLocaleString()}`}
+                        contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }}
+                      />
+                      <Bar 
+                        dataKey="amount" 
+                        fill="hsl(var(--destructive))"
+                        radius={[8, 8, 0, 0]}
+                        animationDuration={1200}
+                        animationBegin={0}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
-                </div>
+                </motion.div>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Total Expenses:</span>
@@ -739,22 +819,43 @@ function App() {
 
           <Card className="p-8">
             <h3 className="text-2xl font-semibold mb-6">Market Disruption: 77% Cost Savings</h3>
-            <div className="h-64">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="h-64"
+            >
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={tcoData}>
-                  <CartesianGrid strokeDasharray="3 3" />
+                  <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                   <XAxis dataKey="category" />
                   <YAxis />
-                  <Tooltip formatter={(value) => `$${(value as number).toLocaleString()}`} />
-                  <Bar dataKey="cost" fill="hsl(var(--accent))" />
+                  <Tooltip 
+                    formatter={(value) => `$${(value as number).toLocaleString()}`}
+                    contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }}
+                  />
+                  <Bar 
+                    dataKey="cost" 
+                    fill="hsl(var(--accent))"
+                    radius={[8, 8, 0, 0]}
+                    animationDuration={1200}
+                    animationBegin={0}
+                  />
                 </BarChart>
               </ResponsiveContainer>
-            </div>
-            <div className="text-center mt-6">
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-center mt-6"
+            >
               <Badge className="bg-success text-success-foreground text-lg px-4 py-2">
                 77% Cost Reduction vs. Traditional Solutions
               </Badge>
-            </div>
+            </motion.div>
           </Card>
         </div>
       </section>
@@ -1216,14 +1317,35 @@ function App() {
                         Growth: stretchFinancials.noi / 1000
                       }
                     ]}>
-                      <CartesianGrid strokeDasharray="3 3" />
+                      <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                       <XAxis dataKey="name" />
                       <YAxis />
-                      <Tooltip formatter={(value) => `$${Number(value).toFixed(0)}K`} />
+                      <Tooltip 
+                        formatter={(value) => `$${Number(value).toFixed(0)}K`}
+                        contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }}
+                      />
                       <Legend />
-                      <Bar dataKey="Conservative" fill="hsl(var(--muted-foreground))" />
-                      <Bar dataKey="Base Case" fill="hsl(var(--secondary))" />
-                      <Bar dataKey="Growth" fill="hsl(var(--accent))" />
+                      <Bar 
+                        dataKey="Conservative" 
+                        fill="hsl(var(--muted-foreground))" 
+                        radius={[4, 4, 0, 0]}
+                        animationDuration={1000}
+                        animationBegin={0}
+                      />
+                      <Bar 
+                        dataKey="Base Case" 
+                        fill="hsl(var(--secondary))"
+                        radius={[4, 4, 0, 0]}
+                        animationDuration={1000}
+                        animationBegin={100}
+                      />
+                      <Bar 
+                        dataKey="Growth" 
+                        fill="hsl(var(--accent))"
+                        radius={[4, 4, 0, 0]}
+                        animationDuration={1000}
+                        animationBegin={200}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
