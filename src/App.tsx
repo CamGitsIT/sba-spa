@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Building, ChartLine, Target, CurrencyDollar, Users, TrendUp, CheckCircle, FileText, Wrench, Storefront, GraduationCap, Heart, Headset, CirclesThreePlus, Handshake, ArrowsLeftRight } from '@phosphor-icons/react'
+import { Building, ChartLine, Target, CurrencyDollar, Users, TrendUp, CheckCircle, FileText, Wrench, Storefront, GraduationCap, Heart, Headset, CirclesThreePlus, Handshake, ArrowsLeftRight, DownloadSimple, Sparkle } from '@phosphor-icons/react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -16,6 +16,9 @@ import { ThemeSelector } from '@/components/ThemeSelector'
 import { useTheme } from '@/hooks/use-theme'
 import { AnimatedCounter } from '@/components/AnimatedCounter'
 import { Sparkline } from '@/components/Sparkline'
+import { FinancialTooltip } from '@/components/FinancialTooltip'
+import { exportToExcel } from '@/lib/exportExcel'
+import { toast } from 'sonner'
 
 function App() {
   useTheme()
@@ -448,14 +451,58 @@ function App() {
                   <TabsTrigger value="stretch">Growth</TabsTrigger>
                 </TabsList>
               </Tabs>
-              <Button 
-                onClick={() => setComparisonModalOpen(true)}
-                variant="outline"
-                className="gap-2"
-              >
-                <ArrowsLeftRight size={20} weight="bold" />
-                Compare Scenarios
-              </Button>
+              <div className="flex gap-3">
+                <motion.div
+                  initial={{ scale: 1 }}
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatDelay: 3
+                  }}
+                >
+                  <Button 
+                    onClick={() => setComparisonModalOpen(true)}
+                    size="lg"
+                    className="gap-2 bg-gradient-to-r from-secondary via-accent to-success hover:from-secondary/90 hover:via-accent/90 hover:to-success/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all relative overflow-hidden group"
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                      animate={{ x: ['-100%', '200%'] }}
+                      transition={{ 
+                        duration: 3,
+                        repeat: Infinity,
+                        repeatDelay: 2,
+                        ease: "easeInOut"
+                      }}
+                    />
+                    <Sparkle size={20} weight="fill" className="group-hover:animate-spin" />
+                    <ArrowsLeftRight size={20} weight="bold" />
+                    <span className="font-semibold">Compare Scenarios</span>
+                  </Button>
+                </motion.div>
+                <Button 
+                  onClick={() => {
+                    exportToExcel(
+                      floorFinancials,
+                      baseFinancials,
+                      stretchFinancials,
+                      scenarios.floor,
+                      scenarios.base,
+                      scenarios.stretch
+                    )
+                    toast.success('Financial model exported successfully!', {
+                      description: 'Your CSV file is downloading now.'
+                    })
+                  }}
+                  variant="outline"
+                  size="lg"
+                  className="gap-2"
+                >
+                  <DownloadSimple size={20} weight="bold" />
+                  Export Excel
+                </Button>
+              </div>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -552,42 +599,59 @@ function App() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
               <Card className="p-4 bg-muted/50 hover:bg-muted/70 transition-colors">
-                <p className="text-xs text-muted-foreground mb-1">Revenue</p>
+                <div className="flex items-center gap-1 mb-1">
+                  <p className="text-xs text-muted-foreground">Revenue</p>
+                </div>
                 <p className="font-mono text-xl font-bold mb-2">${(currentFinancials.revenue / 1000).toFixed(0)}K</p>
                 <div className="flex justify-center">
                   <Sparkline data={sparklineData.revenue} width={100} height={30} trend="up" />
                 </div>
               </Card>
               <Card className="p-4 bg-muted/50 hover:bg-muted/70 transition-colors">
-                <p className="text-xs text-muted-foreground mb-1">Gross Profit</p>
+                <div className="flex items-center gap-1 mb-1">
+                  <p className="text-xs text-muted-foreground">Gross Profit</p>
+                  <FinancialTooltip term="Gross Profit" />
+                </div>
                 <p className="font-mono text-xl font-bold mb-2">${(currentFinancials.grossProfit / 1000).toFixed(0)}K</p>
                 <div className="flex justify-center">
                   <Sparkline data={sparklineData.grossProfit} width={100} height={30} trend="up" />
                 </div>
               </Card>
               <Card className="p-4 bg-muted/50 hover:bg-muted/70 transition-colors">
-                <p className="text-xs text-muted-foreground mb-1">Gross Margin</p>
+                <div className="flex items-center gap-1 mb-1">
+                  <p className="text-xs text-muted-foreground">Gross Margin</p>
+                  <FinancialTooltip term="Gross Margin" />
+                </div>
                 <p className="font-mono text-xl font-bold mb-2">{currentFinancials.grossMargin.toFixed(1)}%</p>
                 <div className="flex justify-center">
                   <Sparkline data={sparklineData.grossMargin} width={100} height={30} trend="up" />
                 </div>
               </Card>
               <Card className="p-4 bg-muted/50 hover:bg-muted/70 transition-colors">
-                <p className="text-xs text-muted-foreground mb-1">NOI</p>
+                <div className="flex items-center gap-1 mb-1">
+                  <p className="text-xs text-muted-foreground">NOI</p>
+                  <FinancialTooltip term="NOI" />
+                </div>
                 <p className="font-mono text-xl font-bold mb-2">${(currentFinancials.noi / 1000).toFixed(0)}K</p>
                 <div className="flex justify-center">
                   <Sparkline data={sparklineData.noi} width={100} height={30} trend="up" />
                 </div>
               </Card>
               <Card className="p-4 bg-muted/50 hover:bg-muted/70 transition-colors">
-                <p className="text-xs text-muted-foreground mb-1">Net Margin</p>
+                <div className="flex items-center gap-1 mb-1">
+                  <p className="text-xs text-muted-foreground">Net Margin</p>
+                  <FinancialTooltip term="Net Margin" />
+                </div>
                 <p className="font-mono text-xl font-bold mb-2">{currentFinancials.netMargin.toFixed(1)}%</p>
                 <div className="flex justify-center">
                   <Sparkline data={sparklineData.netMargin} width={100} height={30} trend="neutral" />
                 </div>
               </Card>
               <Card className="p-4 bg-success/10 border-success hover:bg-success/20 transition-colors">
-                <p className="text-xs text-muted-foreground mb-1">DSCR</p>
+                <div className="flex items-center gap-1 mb-1">
+                  <p className="text-xs text-muted-foreground">DSCR</p>
+                  <FinancialTooltip term="DSCR" />
+                </div>
                 <p className="font-mono text-xl font-bold text-success mb-2">{currentFinancials.dscr}×</p>
                 <div className="flex justify-center">
                   <Sparkline data={sparklineData.dscr} width={100} height={30} trend="up" />
@@ -731,17 +795,24 @@ function App() {
                   </ResponsiveContainer>
                 </motion.div>
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Total Expenses:</span>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-1">
+                      <span className="text-muted-foreground">Total Expenses:</span>
+                    </div>
                     <span className="font-mono font-semibold">${(currentFinancials.totalExpenses / 1000).toFixed(0)}K</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Annual Debt Service:</span>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-1">
+                      <span className="text-muted-foreground">Annual Debt Service:</span>
+                    </div>
                     <span className="font-mono font-semibold">${(currentFinancials.debtService / 1000).toFixed(0)}K</span>
                   </div>
                   <Separator className="my-2" />
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Break-Even Revenue:</span>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-1">
+                      <span className="text-muted-foreground">Break-Even Revenue:</span>
+                      <FinancialTooltip term="Break-Even" />
+                    </div>
                     <span className="font-mono font-semibold">${(currentFinancials.breakEven / 1000).toFixed(0)}K</span>
                   </div>
                   <div className="flex justify-between text-success">
@@ -789,17 +860,26 @@ function App() {
                 </h3>
                 <div className="space-y-4">
                   <div className="p-4 bg-success/10 rounded-lg border border-success/20">
-                    <p className="text-sm font-semibold mb-1">Strong DSCR</p>
+                    <div className="flex items-center gap-1 mb-1">
+                      <p className="text-sm font-semibold">Strong DSCR</p>
+                      <FinancialTooltip term="DSCR" />
+                    </div>
                     <p className="text-3xl font-bold font-mono text-success mb-1">{currentFinancials.dscr}×</p>
                     <p className="text-xs text-muted-foreground">Well above 1.25× minimum requirement</p>
                   </div>
                   <div className="p-4 bg-muted/50 rounded-lg">
-                    <p className="text-sm font-semibold mb-1">Gross Margin</p>
+                    <div className="flex items-center gap-1 mb-1">
+                      <p className="text-sm font-semibold">Gross Margin</p>
+                      <FinancialTooltip term="Gross Margin" />
+                    </div>
                     <p className="text-2xl font-bold font-mono mb-1">{currentFinancials.grossMargin.toFixed(1)}%</p>
                     <p className="text-xs text-muted-foreground">Healthy profitability on core services</p>
                   </div>
                   <div className="p-4 bg-muted/50 rounded-lg">
-                    <p className="text-sm font-semibold mb-1">Net Margin</p>
+                    <div className="flex items-center gap-1 mb-1">
+                      <p className="text-sm font-semibold">Net Margin</p>
+                      <FinancialTooltip term="Net Margin" />
+                    </div>
                     <p className="text-2xl font-bold font-mono mb-1">{currentFinancials.netMargin.toFixed(1)}%</p>
                     <p className="text-xs text-muted-foreground">After all expenses and debt service</p>
                   </div>
