@@ -19,6 +19,7 @@ import { Sparkline } from '@/components/Sparkline'
 import { FinancialTooltip } from '@/components/FinancialTooltip'
 import { exportToExcel } from '@/lib/exportExcel'
 import { toast } from 'sonner'
+import buildingImage from '@/assets/images/455-glen-iris-dr-ne-unit-p-atlanta-ga-building-photo.jpg'
 
 function App() {
   useTheme()
@@ -199,8 +200,12 @@ function App() {
         </div>
       </nav>
 
-      <section id="overview" className="py-20 px-6 bg-gradient-to-br from-primary via-primary to-secondary relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-secondary/95"></div>
+      <section id="overview" className="py-20 px-6 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${buildingImage})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-secondary/90"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
