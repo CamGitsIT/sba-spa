@@ -9,7 +9,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { useKV } from '@github/spark/hooks'
 import { ThemeSelector } from '@/components/ThemeSelector'
@@ -20,11 +19,19 @@ import { FinancialTooltip } from '@/components/FinancialTooltip'
 import { exportToExcel } from '@/lib/exportExcel'
 import { toast } from 'sonner'
 import buildingImage from '@/assets/images/455-glen-iris-dr-ne-unit-p-atlanta-ga-building-photo.jpg'
+import exteriorPhoto1 from '@/assets/images/935478657142e45c960f3b1db567b694-cc_ft_1536.jpg'
+import exteriorPhoto2 from '@/assets/images/b3556a907589f6fbfb44bfdf5f65d5bc-cc_ft_960.jpg'
+import interiorPhoto1 from '@/assets/images/IMG_2145.JPG'
+import interiorPhoto2 from '@/assets/images/IMG_2146.JPG'
+import interiorPhoto3 from '@/assets/images/IMG_2157.JPG'
+import { PropertyGalleryModal } from '@/components/PropertyGalleryModal'
 
 function App() {
   useTheme()
   const [leadershipModalOpen, setLeadershipModalOpen] = useState(false)
   const [comparisonModalOpen, setComparisonModalOpen] = useState(false)
+  const [galleryModalOpen, setGalleryModalOpen] = useState(false)
+  const [galleryInitialIndex, setGalleryInitialIndex] = useState(0)
   const [scenario, setScenario] = useKV('financial-scenario', 'base')
   const [trainingSeats, setTrainingSeats] = useKV('training-seats', '50')
   const [retrofitProjects, setRetrofitProjects] = useKV('retrofit-projects', '30')
@@ -315,27 +322,82 @@ function App() {
           <Card className="p-8">
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <Carousel className="w-full">
-                  <CarouselContent>
-                    <CarouselItem>
-                      <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                        <Building size={64} className="text-muted-foreground" />
-                      </div>
-                    </CarouselItem>
-                    <CarouselItem>
-                      <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                        <Storefront size={64} className="text-muted-foreground" />
-                      </div>
-                    </CarouselItem>
-                    <CarouselItem>
-                      <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                        <GraduationCap size={64} className="text-muted-foreground" />
-                      </div>
-                    </CarouselItem>
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
+                <div className="grid grid-cols-3 gap-3">
+                  <motion.button
+                    onClick={() => { setGalleryInitialIndex(0); setGalleryModalOpen(true); }}
+                    className="aspect-video bg-muted rounded-lg overflow-hidden hover:opacity-80 transition-opacity relative group cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <img src={buildingImage} alt="Property" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <Building size={32} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" weight="bold" />
+                    </div>
+                  </motion.button>
+                  <motion.button
+                    onClick={() => { setGalleryInitialIndex(1); setGalleryModalOpen(true); }}
+                    className="aspect-video bg-muted rounded-lg overflow-hidden hover:opacity-80 transition-opacity relative group cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <img src={exteriorPhoto1} alt="Exterior View" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <Building size={32} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" weight="bold" />
+                    </div>
+                  </motion.button>
+                  <motion.button
+                    onClick={() => { setGalleryInitialIndex(2); setGalleryModalOpen(true); }}
+                    className="aspect-video bg-muted rounded-lg overflow-hidden hover:opacity-80 transition-opacity relative group cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <img src={exteriorPhoto2} alt="Building Entrance" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <Building size={32} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" weight="bold" />
+                    </div>
+                  </motion.button>
+                  <motion.button
+                    onClick={() => { setGalleryInitialIndex(3); setGalleryModalOpen(true); }}
+                    className="aspect-video bg-muted rounded-lg overflow-hidden hover:opacity-80 transition-opacity relative group cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <img src={interiorPhoto1} alt="Interior Space" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <GraduationCap size={32} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" weight="bold" />
+                    </div>
+                  </motion.button>
+                  <motion.button
+                    onClick={() => { setGalleryInitialIndex(4); setGalleryModalOpen(true); }}
+                    className="aspect-video bg-muted rounded-lg overflow-hidden hover:opacity-80 transition-opacity relative group cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <img src={interiorPhoto2} alt="Interior Space" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <Storefront size={32} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" weight="bold" />
+                    </div>
+                  </motion.button>
+                  <motion.button
+                    onClick={() => { setGalleryInitialIndex(5); setGalleryModalOpen(true); }}
+                    className="aspect-video bg-muted rounded-lg overflow-hidden hover:opacity-80 transition-opacity relative group cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <img src={interiorPhoto3} alt="Interior Space" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <Wrench size={32} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" weight="bold" />
+                    </div>
+                  </motion.button>
+                </div>
+                <Button 
+                  onClick={() => { setGalleryInitialIndex(0); setGalleryModalOpen(true); }}
+                  variant="outline" 
+                  className="w-full mt-4"
+                  size="lg"
+                >
+                  View Full Gallery
+                </Button>
               </div>
               <div className="space-y-4">
                 <h3 className="text-2xl font-semibold">455 Glen Iris Drive NE</h3>
@@ -1526,6 +1588,12 @@ function App() {
           </ScrollArea>
         </DialogContent>
       </Dialog>
+
+      <PropertyGalleryModal 
+        open={galleryModalOpen} 
+        onOpenChange={setGalleryModalOpen}
+        initialIndex={galleryInitialIndex}
+      />
     </div>
   )
 }
