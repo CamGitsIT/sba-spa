@@ -24,11 +24,14 @@ import exteriorPhoto2 from '@/assets/images/b3556a907589f6fbfb44bfdf5f65d5bc-cc_
 import interiorPhoto1 from '@/assets/images/IMG_2145.JPG'
 import interiorPhoto2 from '@/assets/images/IMG_2146.JPG'
 import interiorPhoto3 from '@/assets/images/IMG_2157.JPG'
+import cameronHeadshot from '@/assets/images/cameron-champion.png'
+import johnHeadshot from '@/assets/images/john-shea.jpg'
 import { PropertyGalleryModal } from '@/components/PropertyGalleryModal'
 
 function App() {
   useTheme()
   const [leadershipModalOpen, setLeadershipModalOpen] = useState(false)
+  const [selectedLeader, setSelectedLeader] = useState<'cameron' | 'john'>('cameron')
   const [comparisonModalOpen, setComparisonModalOpen] = useState(false)
   const [galleryModalOpen, setGalleryModalOpen] = useState(false)
   const [galleryInitialIndex, setGalleryInitialIndex] = useState(0)
@@ -1039,27 +1042,67 @@ function App() {
       <section className="py-20 px-6 bg-gradient-to-br from-secondary/5 via-accent/5 to-success/5">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Leadership</h2>
-            <p className="text-xl text-muted-foreground font-medium">Experienced founder with proven track record</p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Leadership Team</h2>
+            <p className="text-xl text-muted-foreground font-medium">Proven expertise in technology, operations, and strategic execution</p>
           </div>
 
-          <Card className="p-8 max-w-3xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-6 items-center">
-              <div className="w-32 h-32 rounded-full bg-secondary flex items-center justify-center flex-shrink-0">
-                <Users size={64} className="text-secondary-foreground" weight="duotone" />
-              </div>
-              <div className="flex-1 text-center md:text-left">
-                <h3 className="text-2xl font-semibold mb-2">Cameron Champion</h3>
-                <p className="text-muted-foreground mb-4">Founder & CEO</p>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Technology entrepreneur with extensive experience in network infrastructure, business development, and strategic partnerships. Proven ability to identify market opportunities and execute innovative solutions.
-                </p>
-                <Button onClick={() => setLeadershipModalOpen(true)} variant="outline">
-                  Read Full Canvas Letter
-                </Button>
-              </div>
-            </div>
-          </Card>
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <Card className="p-8 h-full hover:shadow-xl transition-shadow">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-40 h-40 rounded-full overflow-hidden mb-6 ring-4 ring-secondary/20">
+                    <img src={cameronHeadshot} alt="Cameron Champion" className="w-full h-full object-cover" />
+                  </div>
+                  <h3 className="text-2xl font-semibold mb-1">Cameron Champion</h3>
+                  <p className="text-muted-foreground mb-2 font-medium">Founder & CEO</p>
+                  <Badge className="mb-4 bg-secondary text-secondary-foreground">Visionary Leader</Badge>
+                  <p className="text-muted-foreground leading-relaxed mb-6">
+                    Technology entrepreneur with extensive experience in network infrastructure, business development, and strategic partnerships. Proven ability to identify market opportunities and execute innovative solutions.
+                  </p>
+                  <Button 
+                    onClick={() => { setSelectedLeader('cameron'); setLeadershipModalOpen(true); }} 
+                    variant="outline"
+                    className="w-full"
+                  >
+                    Read Full Canvas Letter
+                  </Button>
+                </div>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <Card className="p-8 h-full hover:shadow-xl transition-shadow">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-40 h-40 rounded-full overflow-hidden mb-6 ring-4 ring-accent/20">
+                    <img src={johnHeadshot} alt="John Shea" className="w-full h-full object-cover" />
+                  </div>
+                  <h3 className="text-2xl font-semibold mb-1">John Shea</h3>
+                  <p className="text-muted-foreground mb-2 font-medium">Chief Technology Officer</p>
+                  <Badge className="mb-4 bg-accent text-accent-foreground">Certified Ubiquiti Full Stack Professional</Badge>
+                  <p className="text-muted-foreground leading-relaxed mb-6">
+                    Product owner, sales engineer, and strategist bridging development, clients, and business operations. Expert in software design, process flow, and technology efficiency with operational leadership across real estate and national rollout coordination.
+                  </p>
+                  <Button 
+                    onClick={() => { setSelectedLeader('john'); setLeadershipModalOpen(true); }} 
+                    variant="outline"
+                    className="w-full"
+                  >
+                    Read Full Bio
+                  </Button>
+                </div>
+              </Card>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -1227,38 +1270,86 @@ function App() {
       <Dialog open={leadershipModalOpen} onOpenChange={setLeadershipModalOpen}>
         <DialogContent className="max-w-3xl">
           <DialogHeader>
-            <DialogTitle className="text-2xl">Canvas Letter from Cameron Champion</DialogTitle>
+            <DialogTitle className="text-2xl">
+              {selectedLeader === 'cameron' ? 'Canvas Letter from Cameron Champion' : 'John Shea - Full Biography'}
+            </DialogTitle>
           </DialogHeader>
           <ScrollArea className="max-h-[60vh]">
             <div className="space-y-4 pr-4">
-              <p className="leading-relaxed">Dear Lending Partner,</p>
-              
-              <p className="leading-relaxed">
-                I'm writing to present an opportunity that represents the convergence of market demand, technological disruption, and strategic positioning. The 455 Glen Iris Experience Center isn't just a business acquisition—it's the physical manifestation of a vision to revolutionize how small and medium businesses approach network infrastructure.
-              </p>
+              {selectedLeader === 'cameron' ? (
+                <>
+                  <div className="flex items-center gap-4 mb-6 pb-6 border-b">
+                    <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-secondary/20">
+                      <img src={cameronHeadshot} alt="Cameron Champion" className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold">Cameron Champion</h4>
+                      <p className="text-sm text-muted-foreground">Founder & CEO</p>
+                    </div>
+                  </div>
+                  <p className="leading-relaxed">Dear Lending Partner,</p>
+                  
+                  <p className="leading-relaxed">
+                    I'm writing to present an opportunity that represents the convergence of market demand, technological disruption, and strategic positioning. The 455 Glen Iris Experience Center isn't just a business acquisition—it's the physical manifestation of a vision to revolutionize how small and medium businesses approach network infrastructure.
+                  </p>
 
-              <p className="leading-relaxed">
-                Having spent years in the technology sector, I've witnessed firsthand the frustration businesses face when dealing with overpriced, overcomplicated network solutions. Traditional providers charge $45,000 for installations that we can deliver at $10,350—a 77% cost reduction without compromising quality. This isn't incremental improvement; it's market disruption.
-              </p>
+                  <p className="leading-relaxed">
+                    Having spent years in the technology sector, I've witnessed firsthand the frustration businesses face when dealing with overpriced, overcomplicated network solutions. Traditional providers charge $45,000 for installations that we can deliver at $10,350—a 77% cost reduction without compromising quality. This isn't incremental improvement; it's market disruption.
+                  </p>
 
-              <p className="leading-relaxed">
-                The four-pillar business model creates resilience through diversification. Training revenue provides predictability, retrofit services offer high margins, retail operations generate cash flow, and the community hub builds brand equity. Each pillar reinforces the others, creating network effects that compound over time.
-              </p>
+                  <p className="leading-relaxed">
+                    The four-pillar business model creates resilience through diversification. Training revenue provides predictability, retrofit services offer high margins, retail operations generate cash flow, and the community hub builds brand equity. Each pillar reinforces the others, creating network effects that compound over time.
+                  </p>
 
-              <p className="leading-relaxed">
-                The numbers speak for themselves: a 2.61× debt service coverage ratio on conservative projections, an appraised value 33% above the purchase price, and a market opportunity measured in billions as businesses increasingly prioritize network infrastructure.
-              </p>
+                  <p className="leading-relaxed">
+                    The numbers speak for themselves: a 2.61× debt service coverage ratio on conservative projections, an appraised value 33% above the purchase price, and a market opportunity measured in billions as businesses increasingly prioritize network infrastructure.
+                  </p>
 
-              <p className="leading-relaxed">
-                I'm not asking you to bet on an unproven concept. I'm inviting you to partner on a business with clear market validation, strong unit economics, and a management team committed to execution excellence.
-              </p>
+                  <p className="leading-relaxed">
+                    I'm not asking you to bet on an unproven concept. I'm inviting you to partner on a business with clear market validation, strong unit economics, and a management team committed to execution excellence.
+                  </p>
 
-              <p className="leading-relaxed">Thank you for your consideration.</p>
+                  <p className="leading-relaxed">Thank you for your consideration.</p>
 
-              <p className="leading-relaxed">
-                <strong>Cameron Champion</strong><br />
-                Founder & CEO, OverIT LLC
-              </p>
+                  <p className="leading-relaxed">
+                    <strong>Cameron Champion</strong><br />
+                    Founder & CEO, OverIT LLC
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-4 mb-6 pb-6 border-b">
+                    <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-accent/20">
+                      <img src={johnHeadshot} alt="John Shea" className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold">John Shea</h4>
+                      <p className="text-sm text-muted-foreground">Chief Technology Officer</p>
+                      <Badge className="mt-1 bg-accent text-accent-foreground text-xs">Certified Ubiquiti Full Stack Professional</Badge>
+                    </div>
+                  </div>
+
+                  <p className="leading-relaxed">
+                    John Shea is a Certified Ubiquiti Full Stack Professional with a distinguished background as a product owner, sales engineer, and strategist. His expertise spans software design, process flow optimization, industry best practices, and technology efficiency—making him an invaluable bridge between development teams, client and business stakeholders, sales, and support functions.
+                  </p>
+
+                  <p className="leading-relaxed">
+                    With a deep technical understanding of product capabilities paired with a strong client-facing approach, John consistently delivers end-to-end solutions that exceed expectations. His ability to translate complex technical concepts into actionable business strategies has made him a trusted advisor across multiple industries.
+                  </p>
+
+                  <p className="leading-relaxed">
+                    Beyond his technical acumen, John brings operational leadership and strategic vision to OverIT. He ensures flawless execution across critical initiatives including real estate acquisition and national rollout coordination. His extensive network of relationships across multiple industries enables him to tailor solutions to diverse stakeholders and drive initiatives from initial concept through to scalable deployment.
+                  </p>
+
+                  <p className="leading-relaxed">
+                    At the 455 Glen Iris Experience Center, John oversees the technical training programs, retrofit service delivery, and technology infrastructure that form the backbone of our competitive advantage. His certification as a Ubiquiti Full Stack Professional positions him at the forefront of network technology, ensuring our team remains ahead of industry trends and maintains the highest standards of technical excellence.
+                  </p>
+
+                  <p className="leading-relaxed">
+                    John's leadership style emphasizes collaboration, continuous improvement, and measurable results. He champions a culture of innovation while maintaining the operational discipline necessary for successful scaling and sustainable growth.
+                  </p>
+                </>
+              )}
             </div>
           </ScrollArea>
         </DialogContent>
