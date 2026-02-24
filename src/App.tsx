@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Building, ChartLine, Target, CurrencyDollar, Users, TrendUp, CheckCircle, FileText, Wrench, Storefront, GraduationCap, Heart, Headset, CirclesThreePlus, Handshake, ArrowsLeftRight, DownloadSimple, Sparkle } from '@phosphor-icons/react'
+import { Building, ChartLine, Target, CurrencyDollar, Users, TrendUp, CheckCircle, FileText, Wrench, Storefront, GraduationCap, Heart, Headset, CirclesThreePlus, Handshake, ArrowsLeftRight, DownloadSimple, Sparkle, ChartBar } from '@phosphor-icons/react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -188,6 +188,7 @@ function App() {
               <a href="#property" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Property</a>
               <a href="#business" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Business Model</a>
               <a href="#financials" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Financials</a>
+              <a href="#market-analysis" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Analysis</a>
               <a href="#lender" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">For Lender</a>
               <ThemeSelector />
             </div>
@@ -989,6 +990,46 @@ function App() {
                 <Button onClick={() => setLeadershipModalOpen(true)} variant="outline">
                   Read Full Canvas Letter
                 </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <section id="market-analysis" className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Market Intelligence & Sensitivity Analysis</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-medium">
+              Comprehensive competitive analysis with interactive what-if scenario modeling
+            </p>
+          </div>
+          
+          <Card className="p-8 bg-gradient-to-br from-accent/5 to-secondary/5">
+            <p className="text-center text-muted-foreground mb-4">
+              <strong className="text-foreground">New Features Coming Soon:</strong> Real-time market data integration and advanced sensitivity analysis tools are currently in development.
+            </p>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="p-6 bg-card rounded-lg">
+                <ChartLine size={32} className="text-secondary mb-3" weight="duotone" />
+                <h3 className="text-lg font-semibold mb-2">Market Intelligence Dashboard</h3>
+                <p className="text-sm text-muted-foreground">
+                  Real-time competitive landscape analysis with industry benchmarks and market trend data
+                </p>
+              </div>
+              <div className="p-6 bg-card rounded-lg">
+                <Target size={32} className="text-accent mb-3" weight="duotone" />
+                <h3 className="text-lg font-semibold mb-2">Sensitivity Analysis</h3>
+                <p className="text-sm text-muted-foreground">
+                  Interactive what-if scenario builder showing impact of variable changes on financial outcomes
+                </p>
+              </div>
+              <div className="p-6 bg-card rounded-lg">
+                <ChartBar size={32} className="text-success mb-3" weight="duotone" />
+                <h3 className="text-lg font-semibold mb-2">Tornado Charts</h3>
+                <p className="text-sm text-muted-foreground">
+                  Visual ranking of variables by impact to identify highest-leverage business drivers
+                </p>
               </div>
             </div>
           </Card>
