@@ -25,6 +25,7 @@ import interiorPhoto1 from '@/assets/images/IMG_2145.JPG'
 import interiorPhoto2 from '@/assets/images/IMG_2146.JPG'
 import interiorPhoto3 from '@/assets/images/IMG_2157.JPG'
 import cameronHeadshot from '@/assets/images/cameron-champion.png'
+import johnHeadshot from '@/assets/images/john-shea.png'
 import { PropertyGalleryModal } from '@/components/PropertyGalleryModal'
 
 function App() {
@@ -1085,7 +1086,7 @@ function App() {
               <Card className="p-8 h-full hover:shadow-xl transition-shadow">
                 <div className="flex flex-col items-center text-center">
                   <div className="w-40 h-40 rounded-full overflow-hidden mb-6 ring-4 ring-accent/20">
-                    <img src={cameronHeadshot} alt="John Shea" className="w-full h-full object-cover" />
+                    <img src={johnHeadshot} alt="John Shea" className="w-full h-full object-cover" />
                   </div>
                   <h3 className="text-2xl font-semibold mb-1">John Shea</h3>
                   <p className="text-muted-foreground mb-2 font-medium">Chief Technology Officer</p>
@@ -1145,8 +1146,6 @@ function App() {
             </div>
           </Card>
         </div>
-      </section>
-
       <section id="sba-community-win" className="py-20 px-6 bg-gradient-to-br from-success/10 via-secondary/5 to-accent/10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -1354,6 +1353,8 @@ function App() {
         </div>
       </section>
 
+      </section>
+
       <section id="lender" className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -1528,7 +1529,7 @@ function App() {
                 <>
                   <div className="flex items-center gap-4 mb-6 pb-6 border-b">
                     <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-accent/20">
-                      <img src={cameronHeadshot} alt="John Shea" className="w-full h-full object-cover" />
+                      <img src={johnHeadshot} alt="John Shea" className="w-full h-full object-cover" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold">John Shea</h4>
