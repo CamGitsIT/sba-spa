@@ -19,6 +19,7 @@ import { Sparkline } from '@/components/Sparkline'
 import { FinancialTooltip } from '@/components/FinancialTooltip'
 import { exportToExcel } from '@/lib/exportExcel'
 import { toast } from 'sonner'
+import heroBackgroundImg from '@/assets/images/unifi-products-hero.png'
 
 function App() {
   useTheme()
@@ -200,7 +201,13 @@ function App() {
       </nav>
 
       <section id="overview" className="py-20 px-6 bg-gradient-to-br from-primary via-primary to-secondary relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, currentColor 10px, currentColor 11px)' }}></div>
+        <div className="absolute inset-0 opacity-[0.15]" style={{ 
+          backgroundImage: `url(${heroBackgroundImg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-secondary/95"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
