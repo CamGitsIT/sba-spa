@@ -1145,6 +1145,8 @@ function App() {
             </div>
           </Card>
         </div>
+      </section>
+
       <section id="sba-community-win" className="py-20 px-6 bg-gradient-to-br from-success/10 via-secondary/5 to-accent/10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -1350,8 +1352,6 @@ function App() {
             </div>
           </Card>
         </div>
-      </section>
-
       </section>
 
       <section id="lender" className="py-20 px-6">
