@@ -199,6 +199,8 @@ function App() {
               <a href="#business" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Business Model</a>
               <a href="#financials" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Financials</a>
               <a href="#market-analysis" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Analysis</a>
+              <a href="#sba-community-win" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Community</a>
+              <a href="#fuel-disruption" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">Support</a>
               <a href="#lender" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm font-medium">For Lender</a>
               <ThemeSelector />
             </div>
@@ -1138,6 +1140,213 @@ function App() {
                 <h3 className="text-lg font-semibold mb-2">Tornado Charts</h3>
                 <p className="text-sm text-muted-foreground">
                   Visual ranking of variables by impact to identify highest-leverage business drivers
+                </p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <section id="sba-community-win" className="py-20 px-6 bg-gradient-to-br from-success/10 via-secondary/5 to-accent/10">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">SBA Community Win</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-medium">
+                This investment creates ripples far beyond our business
+              </p>
+            </motion.div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+            >
+              <Card className="p-6 h-full hover:shadow-xl transition-shadow">
+                <Users size={40} className="text-secondary mb-4" weight="duotone" />
+                <h3 className="text-xl font-semibold mb-3">Job Creation</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  The Experience Center will create 8-12 full-time positions within the first year, including instructors, technical staff, retail specialists, and administrative roles.
+                </p>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+            >
+              <Card className="p-6 h-full hover:shadow-xl transition-shadow">
+                <GraduationCap size={40} className="text-accent mb-4" weight="duotone" />
+                <h3 className="text-xl font-semibold mb-3">Workforce Development</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Training programs will upskill 200+ professionals annually in cutting-edge network infrastructure, creating pathways to high-paying tech careers.
+                </p>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+            >
+              <Card className="p-6 h-full hover:shadow-xl transition-shadow">
+                <Building size={40} className="text-success mb-4" weight="duotone" />
+                <h3 className="text-xl font-semibold mb-3">Local Business Support</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Affordable retrofit services and consulting help small businesses access enterprise-grade technology, strengthening Atlanta's business ecosystem.
+                </p>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.4 }}
+            >
+              <Card className="p-6 h-full hover:shadow-xl transition-shadow">
+                <Heart size={40} className="text-destructive mb-4" weight="duotone" />
+                <h3 className="text-xl font-semibold mb-3">Community Hub</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Free meetups, workshops, and tech events create gathering spaces for enthusiasts, fostering innovation and knowledge sharing.
+                </p>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.5 }}
+            >
+              <Card className="p-6 h-full hover:shadow-xl transition-shadow">
+                <TrendUp size={40} className="text-secondary mb-4" weight="duotone" />
+                <h3 className="text-xl font-semibold mb-3">Economic Multiplier</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Every dollar invested generates additional economic activity through vendor relationships, student spending, and business growth.
+                </p>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.6 }}
+            >
+              <Card className="p-6 h-full hover:shadow-xl transition-shadow">
+                <Target size={40} className="text-accent mb-4" weight="duotone" />
+                <h3 className="text-xl font-semibold mb-3">Technology Access</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Democratizing access to premium network technology reduces the digital divide and empowers underserved markets.
+                </p>
+              </Card>
+            </motion.div>
+          </div>
+
+          <Card className="p-8 bg-gradient-to-r from-success/20 to-secondary/20 border-2 border-success/30">
+            <div className="text-center">
+              <h3 className="text-2xl font-bold mb-4">Community Impact by the Numbers</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+                <div>
+                  <p className="text-4xl font-bold font-mono text-success mb-2">
+                    <AnimatedCounter end={12} suffix="+" duration={2000} />
+                  </p>
+                  <p className="text-sm text-muted-foreground">New Jobs Created</p>
+                </div>
+                <div>
+                  <p className="text-4xl font-bold font-mono text-secondary mb-2">
+                    <AnimatedCounter end={200} suffix="+" duration={2000} />
+                  </p>
+                  <p className="text-sm text-muted-foreground">Professionals Trained</p>
+                </div>
+                <div>
+                  <p className="text-4xl font-bold font-mono text-accent mb-2">
+                    <AnimatedCounter end={500} suffix="+" duration={2000} />
+                  </p>
+                  <p className="text-sm text-muted-foreground">Businesses Served</p>
+                </div>
+                <div>
+                  <p className="text-4xl font-bold font-mono text-success mb-2">
+                    <AnimatedCounter end={77} suffix="%" duration={2000} />
+                  </p>
+                  <p className="text-sm text-muted-foreground">Cost Savings</p>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <section id="fuel-disruption" className="py-20 px-6 bg-primary text-primary-foreground">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">Fuel the Disruption</h2>
+              <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto font-medium">
+                Join us in revolutionizing network infrastructure accessibility
+              </p>
+            </motion.div>
+          </div>
+
+          <Card className="p-8 mb-8 bg-card text-foreground">
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-semibold mb-4">Be Part of the Movement</h3>
+              <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6">
+                While we pursue traditional SBA financing, community support accelerates our mission. Your contribution helps us build the Experience Center faster, train more professionals, and serve more businesses with affordable technology solutions.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="text-center p-6 bg-muted/50 rounded-lg">
+                <Sparkle size={32} className="text-accent mx-auto mb-3" weight="fill" />
+                <h4 className="font-semibold mb-2">Accelerate Launch</h4>
+                <p className="text-sm text-muted-foreground">Fast-track equipment purchases and facility improvements</p>
+              </div>
+              <div className="text-center p-6 bg-muted/50 rounded-lg">
+                <GraduationCap size={32} className="text-secondary mx-auto mb-3" weight="duotone" />
+                <h4 className="font-semibold mb-2">Expand Training</h4>
+                <p className="text-sm text-muted-foreground">Add scholarship programs for underserved communities</p>
+              </div>
+              <div className="text-center p-6 bg-muted/50 rounded-lg">
+                <Heart size={32} className="text-success mx-auto mb-3" weight="fill" />
+                <h4 className="font-semibold mb-2">Grow Impact</h4>
+                <p className="text-sm text-muted-foreground">Increase free community events and resources</p>
+              </div>
+            </div>
+
+            <div className="bg-background p-6 rounded-lg border-2 border-accent/20">
+              <h4 className="text-xl font-semibold mb-4 text-center">Support Our Mission</h4>
+              <div 
+                className="gfm-embed mx-auto" 
+                data-url="https://www.gofundme.com/f/empowering-careers-with-new-training-space/widget/large?sharesheet=undefined&attribution_id=sl:3eedc2e2-7c77-4381-a5be-41c3cf3692a8"
+              />
+            </div>
+          </Card>
+
+          <Card className="p-6 bg-card/95 text-foreground">
+            <div className="flex items-start gap-4">
+              <CheckCircle size={24} className="text-success flex-shrink-0 mt-1" weight="fill" />
+              <div>
+                <h4 className="font-semibold mb-2">100% Transparency</h4>
+                <p className="text-sm text-muted-foreground">
+                  Every dollar is allocated to facility improvements, training equipment, and community programming. We provide regular updates on progress and impact.
                 </p>
               </div>
             </div>
