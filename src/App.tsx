@@ -1077,243 +1077,249 @@ function App() {
       </Dialog>
 
       <Dialog open={comparisonModalOpen} onOpenChange={setComparisonModalOpen}>
-        <DialogContent className="max-w-7xl max-h-[90vh]">
-          <DialogHeader>
-            <DialogTitle className="text-2xl flex items-center gap-2">
-              <ArrowsLeftRight size={28} weight="bold" className="text-secondary" />
+        <DialogContent className="max-w-[95vw] md:max-w-6xl max-h-[95vh] overflow-hidden">
+          <DialogHeader className="pb-4">
+            <DialogTitle className="text-xl md:text-2xl flex items-center gap-2">
+              <ArrowsLeftRight size={24} weight="bold" className="text-secondary" />
               Scenario Comparison Analysis
             </DialogTitle>
           </DialogHeader>
-          <ScrollArea className="max-h-[70vh] pr-4">
+          <ScrollArea className="max-h-[calc(95vh-8rem)] pr-4">
             <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="p-6 border-2 border-muted">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold">Conservative</h3>
-                    <Badge variant="outline">Floor</Badge>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">Revenue</span>
-                      <span className="font-mono text-xl font-bold">${(floorFinancials.revenue / 1000).toFixed(0)}K</span>
-                    </div>
-                    <Separator />
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">Gross Profit</span>
-                      <span className="font-mono font-semibold">${(floorFinancials.grossProfit / 1000).toFixed(0)}K</span>
-                    </div>
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">Gross Margin</span>
-                      <span className="font-mono font-semibold">{floorFinancials.grossMargin.toFixed(1)}%</span>
-                    </div>
-                    <Separator />
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">NOI</span>
-                      <span className="font-mono font-semibold">${(floorFinancials.noi / 1000).toFixed(0)}K</span>
-                    </div>
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">Net Margin</span>
-                      <span className="font-mono font-semibold">{floorFinancials.netMargin.toFixed(1)}%</span>
-                    </div>
-                    <Separator className="my-3" />
-                    <div className="flex justify-between items-baseline p-3 bg-muted/50 rounded-lg">
-                      <span className="text-sm font-semibold">DSCR</span>
-                      <span className="font-mono text-xl font-bold text-success">{floorFinancials.dscr}×</span>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+                <Card className="p-4 md:p-5 border-2 border-muted">
+                  <div className="flex flex-col gap-3 mb-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-base md:text-lg font-semibold">Conservative</h3>
+                      <Badge variant="outline" className="text-xs">Floor</Badge>
                     </div>
                   </div>
-                </Card>
-
-                <Card className="p-6 border-2 border-secondary shadow-lg">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold">Base Case</h3>
-                    <Badge className="bg-secondary text-secondary-foreground">Recommended</Badge>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">Revenue</span>
-                      <span className="font-mono text-xl font-bold">${(baseFinancials.revenue / 1000).toFixed(0)}K</span>
+                  <div className="space-y-2.5">
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Revenue</span>
+                      <span className="font-mono text-base md:text-lg font-bold">${(floorFinancials.revenue / 1000).toFixed(0)}K</span>
                     </div>
                     <Separator />
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">Gross Profit</span>
-                      <span className="font-mono font-semibold">${(baseFinancials.grossProfit / 1000).toFixed(0)}K</span>
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Gross Profit</span>
+                      <span className="font-mono text-sm md:text-base font-semibold">${(floorFinancials.grossProfit / 1000).toFixed(0)}K</span>
                     </div>
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">Gross Margin</span>
-                      <span className="font-mono font-semibold">{baseFinancials.grossMargin.toFixed(1)}%</span>
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Gross Margin</span>
+                      <span className="font-mono text-sm md:text-base font-semibold">{floorFinancials.grossMargin.toFixed(1)}%</span>
                     </div>
                     <Separator />
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">NOI</span>
-                      <span className="font-mono font-semibold">${(baseFinancials.noi / 1000).toFixed(0)}K</span>
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">NOI</span>
+                      <span className="font-mono text-sm md:text-base font-semibold">${(floorFinancials.noi / 1000).toFixed(0)}K</span>
                     </div>
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">Net Margin</span>
-                      <span className="font-mono font-semibold">{baseFinancials.netMargin.toFixed(1)}%</span>
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Net Margin</span>
+                      <span className="font-mono text-sm md:text-base font-semibold">{floorFinancials.netMargin.toFixed(1)}%</span>
                     </div>
-                    <Separator className="my-3" />
-                    <div className="flex justify-between items-baseline p-3 bg-success/10 rounded-lg border border-success/20">
-                      <span className="text-sm font-semibold">DSCR</span>
-                      <span className="font-mono text-xl font-bold text-success">{baseFinancials.dscr}×</span>
+                    <Separator className="my-2" />
+                    <div className="flex justify-between items-center gap-3 p-2.5 md:p-3 bg-muted/50 rounded-lg">
+                      <span className="text-xs md:text-sm font-semibold whitespace-nowrap">DSCR</span>
+                      <span className="font-mono text-lg md:text-xl font-bold text-success">{floorFinancials.dscr}×</span>
                     </div>
                   </div>
                 </Card>
 
-                <Card className="p-6 border-2 border-muted">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold">Growth</h3>
-                    <Badge variant="outline">Stretch</Badge>
+                <Card className="p-4 md:p-5 border-2 border-secondary shadow-lg bg-secondary/5">
+                  <div className="flex flex-col gap-3 mb-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-base md:text-lg font-semibold">Base Case</h3>
+                      <Badge className="bg-secondary text-secondary-foreground text-xs">Recommended</Badge>
+                    </div>
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">Revenue</span>
-                      <span className="font-mono text-xl font-bold">${(stretchFinancials.revenue / 1000).toFixed(0)}K</span>
+                  <div className="space-y-2.5">
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Revenue</span>
+                      <span className="font-mono text-base md:text-lg font-bold">${(baseFinancials.revenue / 1000).toFixed(0)}K</span>
                     </div>
                     <Separator />
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">Gross Profit</span>
-                      <span className="font-mono font-semibold">${(stretchFinancials.grossProfit / 1000).toFixed(0)}K</span>
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Gross Profit</span>
+                      <span className="font-mono text-sm md:text-base font-semibold">${(baseFinancials.grossProfit / 1000).toFixed(0)}K</span>
                     </div>
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">Gross Margin</span>
-                      <span className="font-mono font-semibold">{stretchFinancials.grossMargin.toFixed(1)}%</span>
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Gross Margin</span>
+                      <span className="font-mono text-sm md:text-base font-semibold">{baseFinancials.grossMargin.toFixed(1)}%</span>
                     </div>
                     <Separator />
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">NOI</span>
-                      <span className="font-mono font-semibold">${(stretchFinancials.noi / 1000).toFixed(0)}K</span>
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">NOI</span>
+                      <span className="font-mono text-sm md:text-base font-semibold">${(baseFinancials.noi / 1000).toFixed(0)}K</span>
                     </div>
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm text-muted-foreground">Net Margin</span>
-                      <span className="font-mono font-semibold">{stretchFinancials.netMargin.toFixed(1)}%</span>
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Net Margin</span>
+                      <span className="font-mono text-sm md:text-base font-semibold">{baseFinancials.netMargin.toFixed(1)}%</span>
                     </div>
-                    <Separator className="my-3" />
-                    <div className="flex justify-between items-baseline p-3 bg-muted/50 rounded-lg">
-                      <span className="text-sm font-semibold">DSCR</span>
-                      <span className="font-mono text-xl font-bold text-success">{stretchFinancials.dscr}×</span>
+                    <Separator className="my-2" />
+                    <div className="flex justify-between items-center gap-3 p-2.5 md:p-3 bg-success/10 rounded-lg border border-success/20">
+                      <span className="text-xs md:text-sm font-semibold whitespace-nowrap">DSCR</span>
+                      <span className="font-mono text-lg md:text-xl font-bold text-success">{baseFinancials.dscr}×</span>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-4 md:p-5 border-2 border-muted">
+                  <div className="flex flex-col gap-3 mb-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-base md:text-lg font-semibold">Growth</h3>
+                      <Badge variant="outline" className="text-xs">Stretch</Badge>
+                    </div>
+                  </div>
+                  <div className="space-y-2.5">
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Revenue</span>
+                      <span className="font-mono text-base md:text-lg font-bold">${(stretchFinancials.revenue / 1000).toFixed(0)}K</span>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Gross Profit</span>
+                      <span className="font-mono text-sm md:text-base font-semibold">${(stretchFinancials.grossProfit / 1000).toFixed(0)}K</span>
+                    </div>
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Gross Margin</span>
+                      <span className="font-mono text-sm md:text-base font-semibold">{stretchFinancials.grossMargin.toFixed(1)}%</span>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">NOI</span>
+                      <span className="font-mono text-sm md:text-base font-semibold">${(stretchFinancials.noi / 1000).toFixed(0)}K</span>
+                    </div>
+                    <div className="flex justify-between items-baseline gap-3">
+                      <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Net Margin</span>
+                      <span className="font-mono text-sm md:text-base font-semibold">{stretchFinancials.netMargin.toFixed(1)}%</span>
+                    </div>
+                    <Separator className="my-2" />
+                    <div className="flex justify-between items-center gap-3 p-2.5 md:p-3 bg-muted/50 rounded-lg">
+                      <span className="text-xs md:text-sm font-semibold whitespace-nowrap">DSCR</span>
+                      <span className="font-mono text-lg md:text-xl font-bold text-success">{stretchFinancials.dscr}×</span>
                     </div>
                   </div>
                 </Card>
               </div>
 
-              <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Revenue Driver Assumptions</h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
+              <Card className="p-4 md:p-6">
+                <h3 className="text-base md:text-lg font-semibold mb-4">Revenue Driver Assumptions</h3>
+                <div className="overflow-x-auto -mx-4 md:mx-0">
+                  <table className="w-full text-xs md:text-sm min-w-[500px]">
                     <thead>
                       <tr className="border-b">
-                        <th className="text-left py-3 px-4 font-semibold">Revenue Stream</th>
-                        <th className="text-center py-3 px-4 font-semibold">Conservative</th>
-                        <th className="text-center py-3 px-4 font-semibold bg-secondary/5">Base Case</th>
-                        <th className="text-center py-3 px-4 font-semibold">Growth</th>
+                        <th className="text-left py-2 md:py-3 px-2 md:px-4 font-semibold">Revenue Stream</th>
+                        <th className="text-center py-2 md:py-3 px-2 md:px-4 font-semibold">Conservative</th>
+                        <th className="text-center py-2 md:py-3 px-2 md:px-4 font-semibold bg-secondary/10">Base Case</th>
+                        <th className="text-center py-2 md:py-3 px-2 md:px-4 font-semibold">Growth</th>
                       </tr>
                     </thead>
                     <tbody className="font-mono">
                       <tr className="border-b">
-                        <td className="py-3 px-4">Training Seats/Quarter</td>
-                        <td className="text-center py-3 px-4">{scenarios.floor.training}</td>
-                        <td className="text-center py-3 px-4 bg-secondary/5 font-semibold">{scenarios.base.training}</td>
-                        <td className="text-center py-3 px-4">{scenarios.stretch.training}</td>
+                        <td className="py-2 md:py-3 px-2 md:px-4 whitespace-nowrap">Training Seats/Quarter</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4">{scenarios.floor.training}</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4 bg-secondary/10 font-semibold">{scenarios.base.training}</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4">{scenarios.stretch.training}</td>
                       </tr>
                       <tr className="border-b">
-                        <td className="py-3 px-4">Retrofit Projects/Year</td>
-                        <td className="text-center py-3 px-4">{scenarios.floor.retrofit}</td>
-                        <td className="text-center py-3 px-4 bg-secondary/5 font-semibold">{scenarios.base.retrofit}</td>
-                        <td className="text-center py-3 px-4">{scenarios.stretch.retrofit}</td>
+                        <td className="py-2 md:py-3 px-2 md:px-4 whitespace-nowrap">Retrofit Projects/Year</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4">{scenarios.floor.retrofit}</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4 bg-secondary/10 font-semibold">{scenarios.base.retrofit}</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4">{scenarios.stretch.retrofit}</td>
                       </tr>
                       <tr className="border-b">
-                        <td className="py-3 px-4">Retail Locations</td>
-                        <td className="text-center py-3 px-4">{scenarios.floor.retail}</td>
-                        <td className="text-center py-3 px-4 bg-secondary/5 font-semibold">{scenarios.base.retail}</td>
-                        <td className="text-center py-3 px-4">{scenarios.stretch.retail}</td>
+                        <td className="py-2 md:py-3 px-2 md:px-4 whitespace-nowrap">Retail Locations</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4">{scenarios.floor.retail}</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4 bg-secondary/10 font-semibold">{scenarios.base.retail}</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4">{scenarios.stretch.retail}</td>
                       </tr>
                       <tr className="border-b">
-                        <td className="py-3 px-4">Consulting Hours/Month</td>
-                        <td className="text-center py-3 px-4">{scenarios.floor.consulting}</td>
-                        <td className="text-center py-3 px-4 bg-secondary/5 font-semibold">{scenarios.base.consulting}</td>
-                        <td className="text-center py-3 px-4">{scenarios.stretch.consulting}</td>
+                        <td className="py-2 md:py-3 px-2 md:px-4 whitespace-nowrap">Consulting Hours/Month</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4">{scenarios.floor.consulting}</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4 bg-secondary/10 font-semibold">{scenarios.base.consulting}</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4">{scenarios.stretch.consulting}</td>
                       </tr>
                       <tr className="border-b">
-                        <td className="py-3 px-4">Maintenance Contracts</td>
-                        <td className="text-center py-3 px-4">{scenarios.floor.maintenance}</td>
-                        <td className="text-center py-3 px-4 bg-secondary/5 font-semibold">{scenarios.base.maintenance}</td>
-                        <td className="text-center py-3 px-4">{scenarios.stretch.maintenance}</td>
+                        <td className="py-2 md:py-3 px-2 md:px-4 whitespace-nowrap">Maintenance Contracts</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4">{scenarios.floor.maintenance}</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4 bg-secondary/10 font-semibold">{scenarios.base.maintenance}</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4">{scenarios.stretch.maintenance}</td>
                       </tr>
                       <tr className="border-b">
-                        <td className="py-3 px-4">Affiliate Partnerships</td>
-                        <td className="text-center py-3 px-4">{scenarios.floor.affiliate}</td>
-                        <td className="text-center py-3 px-4 bg-secondary/5 font-semibold">{scenarios.base.affiliate}</td>
-                        <td className="text-center py-3 px-4">{scenarios.stretch.affiliate}</td>
+                        <td className="py-2 md:py-3 px-2 md:px-4 whitespace-nowrap">Affiliate Partnerships</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4">{scenarios.floor.affiliate}</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4 bg-secondary/10 font-semibold">{scenarios.base.affiliate}</td>
+                        <td className="text-center py-2 md:py-3 px-2 md:px-4">{scenarios.stretch.affiliate}</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </Card>
 
-              <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Revenue Mix Comparison</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card className="p-4 md:p-6">
+                <h3 className="text-base md:text-lg font-semibold mb-4">Revenue Mix Comparison</h3>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-3 text-center">Conservative</p>
-                    <div className="space-y-2">
+                    <p className="text-xs md:text-sm font-medium text-muted-foreground mb-3 text-center">Conservative</p>
+                    <div className="space-y-1.5 md:space-y-2">
                       {[
-                        { label: 'Training', value: floorFinancials.revenueByStream.training, icon: <GraduationCap size={16} weight="duotone" /> },
-                        { label: 'Retrofit', value: floorFinancials.revenueByStream.retrofit, icon: <Wrench size={16} weight="duotone" /> },
-                        { label: 'Retail', value: floorFinancials.revenueByStream.retail, icon: <Storefront size={16} weight="duotone" /> },
-                        { label: 'Consulting', value: floorFinancials.revenueByStream.consulting, icon: <Headset size={16} weight="duotone" /> },
-                        { label: 'Maintenance', value: floorFinancials.revenueByStream.maintenance, icon: <CirclesThreePlus size={16} weight="duotone" /> },
-                        { label: 'Affiliate', value: floorFinancials.revenueByStream.affiliate, icon: <Handshake size={16} weight="duotone" /> }
+                        { label: 'Training', value: floorFinancials.revenueByStream.training, icon: <GraduationCap size={14} weight="duotone" /> },
+                        { label: 'Retrofit', value: floorFinancials.revenueByStream.retrofit, icon: <Wrench size={14} weight="duotone" /> },
+                        { label: 'Retail', value: floorFinancials.revenueByStream.retail, icon: <Storefront size={14} weight="duotone" /> },
+                        { label: 'Consulting', value: floorFinancials.revenueByStream.consulting, icon: <Headset size={14} weight="duotone" /> },
+                        { label: 'Maintenance', value: floorFinancials.revenueByStream.maintenance, icon: <CirclesThreePlus size={14} weight="duotone" /> },
+                        { label: 'Affiliate', value: floorFinancials.revenueByStream.affiliate, icon: <Handshake size={14} weight="duotone" /> }
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center justify-between p-2 bg-muted/30 rounded text-sm">
-                          <div className="flex items-center gap-2">
+                        <div key={idx} className="flex items-center justify-between p-1.5 md:p-2 bg-muted/30 rounded text-xs md:text-sm">
+                          <div className="flex items-center gap-1.5 md:gap-2">
                             {item.icon}
-                            <span>{item.label}</span>
+                            <span className="whitespace-nowrap">{item.label}</span>
                           </div>
-                          <span className="font-mono font-semibold">${(item.value / 1000).toFixed(0)}K</span>
+                          <span className="font-mono font-semibold whitespace-nowrap">${(item.value / 1000).toFixed(0)}K</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-3 text-center">Base Case</p>
-                    <div className="space-y-2">
+                    <p className="text-xs md:text-sm font-medium text-muted-foreground mb-3 text-center">Base Case</p>
+                    <div className="space-y-1.5 md:space-y-2">
                       {[
-                        { label: 'Training', value: baseFinancials.revenueByStream.training, icon: <GraduationCap size={16} weight="duotone" /> },
-                        { label: 'Retrofit', value: baseFinancials.revenueByStream.retrofit, icon: <Wrench size={16} weight="duotone" /> },
-                        { label: 'Retail', value: baseFinancials.revenueByStream.retail, icon: <Storefront size={16} weight="duotone" /> },
-                        { label: 'Consulting', value: baseFinancials.revenueByStream.consulting, icon: <Headset size={16} weight="duotone" /> },
-                        { label: 'Maintenance', value: baseFinancials.revenueByStream.maintenance, icon: <CirclesThreePlus size={16} weight="duotone" /> },
-                        { label: 'Affiliate', value: baseFinancials.revenueByStream.affiliate, icon: <Handshake size={16} weight="duotone" /> }
+                        { label: 'Training', value: baseFinancials.revenueByStream.training, icon: <GraduationCap size={14} weight="duotone" /> },
+                        { label: 'Retrofit', value: baseFinancials.revenueByStream.retrofit, icon: <Wrench size={14} weight="duotone" /> },
+                        { label: 'Retail', value: baseFinancials.revenueByStream.retail, icon: <Storefront size={14} weight="duotone" /> },
+                        { label: 'Consulting', value: baseFinancials.revenueByStream.consulting, icon: <Headset size={14} weight="duotone" /> },
+                        { label: 'Maintenance', value: baseFinancials.revenueByStream.maintenance, icon: <CirclesThreePlus size={14} weight="duotone" /> },
+                        { label: 'Affiliate', value: baseFinancials.revenueByStream.affiliate, icon: <Handshake size={14} weight="duotone" /> }
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center justify-between p-2 bg-secondary/10 rounded text-sm">
-                          <div className="flex items-center gap-2">
+                        <div key={idx} className="flex items-center justify-between p-1.5 md:p-2 bg-secondary/10 rounded text-xs md:text-sm">
+                          <div className="flex items-center gap-1.5 md:gap-2">
                             {item.icon}
-                            <span>{item.label}</span>
+                            <span className="whitespace-nowrap">{item.label}</span>
                           </div>
-                          <span className="font-mono font-semibold">${(item.value / 1000).toFixed(0)}K</span>
+                          <span className="font-mono font-semibold whitespace-nowrap">${(item.value / 1000).toFixed(0)}K</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-3 text-center">Growth</p>
-                    <div className="space-y-2">
+                    <p className="text-xs md:text-sm font-medium text-muted-foreground mb-3 text-center">Growth</p>
+                    <div className="space-y-1.5 md:space-y-2">
                       {[
-                        { label: 'Training', value: stretchFinancials.revenueByStream.training, icon: <GraduationCap size={16} weight="duotone" /> },
-                        { label: 'Retrofit', value: stretchFinancials.revenueByStream.retrofit, icon: <Wrench size={16} weight="duotone" /> },
-                        { label: 'Retail', value: stretchFinancials.revenueByStream.retail, icon: <Storefront size={16} weight="duotone" /> },
-                        { label: 'Consulting', value: stretchFinancials.revenueByStream.consulting, icon: <Headset size={16} weight="duotone" /> },
-                        { label: 'Maintenance', value: stretchFinancials.revenueByStream.maintenance, icon: <CirclesThreePlus size={16} weight="duotone" /> },
-                        { label: 'Affiliate', value: stretchFinancials.revenueByStream.affiliate, icon: <Handshake size={16} weight="duotone" /> }
+                        { label: 'Training', value: stretchFinancials.revenueByStream.training, icon: <GraduationCap size={14} weight="duotone" /> },
+                        { label: 'Retrofit', value: stretchFinancials.revenueByStream.retrofit, icon: <Wrench size={14} weight="duotone" /> },
+                        { label: 'Retail', value: stretchFinancials.revenueByStream.retail, icon: <Storefront size={14} weight="duotone" /> },
+                        { label: 'Consulting', value: stretchFinancials.revenueByStream.consulting, icon: <Headset size={14} weight="duotone" /> },
+                        { label: 'Maintenance', value: stretchFinancials.revenueByStream.maintenance, icon: <CirclesThreePlus size={14} weight="duotone" /> },
+                        { label: 'Affiliate', value: stretchFinancials.revenueByStream.affiliate, icon: <Handshake size={14} weight="duotone" /> }
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center justify-between p-2 bg-muted/30 rounded text-sm">
-                          <div className="flex items-center gap-2">
+                        <div key={idx} className="flex items-center justify-between p-1.5 md:p-2 bg-muted/30 rounded text-xs md:text-sm">
+                          <div className="flex items-center gap-1.5 md:gap-2">
                             {item.icon}
-                            <span>{item.label}</span>
+                            <span className="whitespace-nowrap">{item.label}</span>
                           </div>
-                          <span className="font-mono font-semibold">${(item.value / 1000).toFixed(0)}K</span>
+                          <span className="font-mono font-semibold whitespace-nowrap">${(item.value / 1000).toFixed(0)}K</span>
                         </div>
                       ))}
                     </div>
@@ -1321,9 +1327,9 @@ function App() {
                 </div>
               </Card>
 
-              <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Key Metrics Comparison</h3>
-                <div className="h-80">
+              <Card className="p-4 md:p-6">
+                <h3 className="text-base md:text-lg font-semibold mb-4">Key Metrics Comparison</h3>
+                <div className="h-64 md:h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={[
                       {
@@ -1346,13 +1352,13 @@ function App() {
                       }
                     ]}>
                       <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                      <XAxis dataKey="name" />
-                      <YAxis />
+                      <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                      <YAxis tick={{ fontSize: 12 }} />
                       <Tooltip 
                         formatter={(value) => `$${Number(value).toFixed(0)}K`}
-                        contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px' }}
+                        contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px', fontSize: '12px' }}
                       />
-                      <Legend />
+                      <Legend wrapperStyle={{ fontSize: '12px' }} />
                       <Bar 
                         dataKey="Conservative" 
                         fill="hsl(var(--muted-foreground))" 
@@ -1379,14 +1385,14 @@ function App() {
                 </div>
               </Card>
 
-              <div className="flex justify-center gap-4 pt-4">
-                <Button onClick={() => { setScenarioValues('floor'); setComparisonModalOpen(false); }} variant="outline">
+              <div className="flex flex-col sm:flex-row justify-center gap-3 md:gap-4 pt-4">
+                <Button onClick={() => { setScenarioValues('floor'); setComparisonModalOpen(false); }} variant="outline" className="text-sm md:text-base">
                   Apply Conservative
                 </Button>
-                <Button onClick={() => { setScenarioValues('base'); setComparisonModalOpen(false); }} className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+                <Button onClick={() => { setScenarioValues('base'); setComparisonModalOpen(false); }} className="bg-secondary text-secondary-foreground hover:bg-secondary/90 text-sm md:text-base">
                   Apply Base Case
                 </Button>
-                <Button onClick={() => { setScenarioValues('stretch'); setComparisonModalOpen(false); }} variant="outline">
+                <Button onClick={() => { setScenarioValues('stretch'); setComparisonModalOpen(false); }} variant="outline" className="text-sm md:text-base">
                   Apply Growth
                 </Button>
               </div>
