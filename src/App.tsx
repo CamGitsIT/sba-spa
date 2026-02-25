@@ -188,8 +188,8 @@ function App() {
   )
 
   return (
-    <div className="min-h-screen bg-background">
-      <nav className="sticky top-0 z-50 bg-primary/95 backdrop-blur-sm border-b border-primary-foreground/10 no-print">
+    <div className="flex flex-col min-h-screen bg-background">
+      <nav className="sticky top-0 z-50 bg-primary/95 backdrop-blur-sm border-b border-primary-foreground/10 no-print flex-shrink-0">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-primary-foreground">OverIT • 455 Glen Iris</h2>
