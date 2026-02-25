@@ -10,13 +10,12 @@ import interiorPhoto1 from '@/assets/images/IMG_2145.JPG'
 import interiorPhoto2 from '@/assets/images/IMG_2146.JPG'
 import interiorPhoto3 from '@/assets/images/IMG_2157.JPG'
 
-interface PropertyGalleryModalProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  initialIndex?: number
+export interface GalleryImage {
+  src: string
+  caption: string
 }
 
-const images = [
+const defaultImages: GalleryImage[] = [
   { src: buildingPhoto, caption: '455 Glen Iris Drive NE - Main Building' },
   { src: exteriorPhoto1, caption: 'Property Exterior View' },
   { src: exteriorPhoto2, caption: 'Building Entrance' },
@@ -25,7 +24,15 @@ const images = [
   { src: interiorPhoto3, caption: 'Interior Space - Workshop Area' }
 ]
 
-export function PropertyGalleryModal({ open, onOpenChange, initialIndex = 0 }: PropertyGalleryModalProps) {
+interface PropertyGalleryModalProps {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  initialIndex?: number
+  extraImages?: GalleryImage[]
+}
+
+export function PropertyGalleryModal({ open, onOpenChange, initialIndex = 0, extraImages = [] }: PropertyGalleryModalProps) {
+  const images = [...defaultImages, ...extraImages]
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
 
   const handlePrevious = () => {

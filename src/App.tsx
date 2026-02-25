@@ -25,7 +25,8 @@ import interiorPhoto1 from '@/assets/images/IMG_2145.JPG'
 import interiorPhoto2 from '@/assets/images/IMG_2146.JPG'
 import interiorPhoto3 from '@/assets/images/IMG_2157.JPG'
 import cameronHeadshot from '@/assets/images/cameron-champion.png'
-import { PropertyGalleryModal } from '@/components/PropertyGalleryModal'
+import { PropertyGalleryModal, type GalleryImage } from '@/components/PropertyGalleryModal'
+import { ZipImageUploader } from '@/components/ZipImageUploader'
 
 function App() {
   useTheme()
@@ -34,6 +35,7 @@ function App() {
   const [comparisonModalOpen, setComparisonModalOpen] = useState(false)
   const [galleryModalOpen, setGalleryModalOpen] = useState(false)
   const [galleryInitialIndex, setGalleryInitialIndex] = useState(0)
+  const [extraGalleryImages, setExtraGalleryImages] = useState<GalleryImage[]>([])
   const [scenario, setScenario] = useKV('financial-scenario', 'base')
   const [trainingSeats, setTrainingSeats] = useKV('training-seats', '50')
   const [retrofitProjects, setRetrofitProjects] = useKV('retrofit-projects', '30')
@@ -402,6 +404,9 @@ function App() {
                 >
                   View Full Gallery
                 </Button>
+                <ZipImageUploader
+                  onImagesExtracted={(imgs) => setExtraGalleryImages((prev) => [...prev, ...imgs])}
+                />
               </div>
               <div className="space-y-4">
                 <h3 className="text-2xl font-semibold">455 Glen Iris Drive NE</h3>
@@ -1892,6 +1897,7 @@ function App() {
         open={galleryModalOpen} 
         onOpenChange={setGalleryModalOpen}
         initialIndex={galleryInitialIndex}
+        extraImages={extraGalleryImages}
       />
     </div>
   )
