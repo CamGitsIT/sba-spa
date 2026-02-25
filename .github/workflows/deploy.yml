@@ -29,13 +29,17 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Install Wrangler
-        run: npm install -g wrangler@4.68.1
-
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4.68.1"
           command: pages deploy dist --project-name=sba-spa --branch=main
+
+      - name: Print Wrangler logs on failure
+        if: failure()
+        run: |
+          ls /home/runner/.config/.wrangler/logs/ || true
+          tail -n 200 /home/runner/.config/.wrangler/logs/wrangler-*.log 2>/dev/null || true
 
