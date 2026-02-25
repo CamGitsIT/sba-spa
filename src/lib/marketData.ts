@@ -77,9 +77,14 @@ export const useMarketData = () => {
   }
 
   useEffect(() => {
-    if (!marketData || marketData.length === 0 || !competitors || competitors.length === 0 || !benchmarks || benchmarks.length === 0) {
+    const hasData = marketData && marketData.length > 0 && 
+                    competitors && competitors.length > 0 && 
+                    benchmarks && benchmarks.length > 0
+    
+    if (!hasData) {
       refreshMarketData()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return {

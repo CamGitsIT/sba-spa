@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, CaretLeft, CaretRight } from '@phosphor-icons/react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
@@ -27,6 +27,12 @@ const images = [
 
 export function PropertyGalleryModal({ open, onOpenChange, initialIndex = 0 }: PropertyGalleryModalProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
+
+  useEffect(() => {
+    if (open) {
+      setCurrentIndex(initialIndex)
+    }
+  }, [open, initialIndex])
 
   const handlePrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
